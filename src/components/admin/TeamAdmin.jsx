@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../../config';
 import { Plus, Trash2, Edit2, X, Check } from 'lucide-react';
 
 export default function TeamAdmin() {
@@ -8,7 +9,7 @@ export default function TeamAdmin() {
   const [editId, setEditId] = useState(null);
 
   const fetchMembers = async () => {
-    const res = await fetch('http://localhost:5001/api/team');
+    const res = await fetch(`${API_URL}/api/team`);
     const data = await res.json();
     setMembers(data);
   };
@@ -21,7 +22,7 @@ export default function TeamAdmin() {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
     const method = editId ? 'PUT' : 'POST';
-    const url = editId ? `http://localhost:5001/api/team/${editId}` : 'http://localhost:5001/api/team';
+    const url = editId ? `${API_URL}/api/team/${editId}` : `${API_URL}/api/team`;
 
     const res = await fetch(url, {
       method,
@@ -43,7 +44,7 @@ export default function TeamAdmin() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure?')) return;
     const token = localStorage.getItem('adminToken');
-    const res = await fetch(`http://localhost:5001/api/team/${id}`, {
+    const res = await fetch(`${API_URL}/api/team/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -104,7 +105,7 @@ export default function TeamAdmin() {
         {members.map(member => (
           <div key={member._id} className="glass-card p-6 rounded-3xl border border-white/5 flex flex-col items-center text-center group">
             <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-primary/50 mb-4 group-hover:scale-110 transition-transform">
-              <img src={member.imageUrl} className="w-full h-full object-cover" />
+              <img src={member.imageUrl?.startsWith('http') ? member.imageUrl : `${API_URL}${member.imageUrl}`} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-xl font-bold text-white">{member.name}</h3>
             <p className="text-primary text-sm mb-2">{member.role}</p>

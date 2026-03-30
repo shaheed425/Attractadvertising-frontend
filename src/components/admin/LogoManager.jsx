@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Upload, X } from 'lucide-react';
 
@@ -22,7 +23,7 @@ export default function LogoManager() {
 
   const fetchItems = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5001/api/logos');
+      const { data } = await axios.get(`${API_URL}/api/logos`);
       console.log('Logo Data Fetched:', data);
       setItems(data);
     } catch (err) {
@@ -44,7 +45,7 @@ export default function LogoManager() {
 
     try {
       setLoading(true);
-      const { data } = await axios.post('http://localhost:5001/api/upload', uploadData, {
+      const { data } = await axios.post(`${API_URL}/api/upload`, uploadData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setFormData(prev => ({ ...prev, logoUrl: data }));
@@ -66,7 +67,7 @@ export default function LogoManager() {
     }
 
     try {
-      await axios.post('http://localhost:5001/api/logos', formData, {
+      await axios.post(`${API_URL}/api/logos`, formData, {
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}` 
@@ -84,7 +85,7 @@ export default function LogoManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Remove this partner logo?')) {
-      await axios.delete(`http://localhost:5001/api/logos/${id}`, {
+      await axios.delete(`${API_URL}/api/logos/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       fetchItems();
@@ -136,7 +137,7 @@ export default function LogoManager() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Logo Asset</label>
                 {(imagePreview || formData.logoUrl) && (
                   <div className="w-full h-40 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 p-8 shadow-inner overflow-hidden">
-                    <img src={imagePreview || (formData.logoUrl?.startsWith('http') ? formData.logoUrl : `http://localhost:5001${formData.logoUrl}`)} className="max-w-full max-h-full object-contain grayscale opacity-60 invert" alt="Preview" />
+                    <img src={imagePreview || (formData.logoUrl?.startsWith('http') ? formData.logoUrl : `${API_URL}${formData.logoUrl}`)} className="max-w-full max-h-full object-contain grayscale opacity-60 invert" alt="Preview" />
                   </div>
                 )}
                 
@@ -180,7 +181,7 @@ export default function LogoManager() {
               <Trash2 size={18} />
             </button>
             <div className="w-28 h-28 flex items-center justify-center p-2">
-              <img src={item.logoUrl?.startsWith('http') ? item.logoUrl : `http://localhost:5001${item.logoUrl}`} alt={item.clientName} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-40 group-hover:opacity-100 scale-90 group-hover:scale-110 invert" />
+              <img src={item.logoUrl?.startsWith('http') ? item.logoUrl : `${API_URL}${item.logoUrl}`} alt={item.clientName} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-40 group-hover:opacity-100 scale-90 group-hover:scale-110 invert" />
             </div>
             <div className="w-full pt-6 border-t border-white/10">
               <p className="text-white opacity-40 text-[10px] uppercase font-black tracking-[0.3em] text-center leading-none">{item.clientName}</p>

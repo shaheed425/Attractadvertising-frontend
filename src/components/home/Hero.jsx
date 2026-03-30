@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Smartphone, Globe } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -19,7 +20,7 @@ export default function Hero() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/employees');
+        const { data } = await axios.get(`${API_URL}/api/employees`);
         setTeam(data.slice(0, 4)); // Get first 4 members for avatars
       } catch (error) {
         console.error('Hero Team Fetch Error:', error);
@@ -105,7 +106,7 @@ export default function Hero() {
                     team.map((member, i) => (
                       <div key={member._id} className="w-10 h-10 rounded-full border-2 border-black bg-white/10 overflow-hidden">
                         <img 
-                          src={member.imageUrl?.startsWith('http') ? member.imageUrl : `http://localhost:5001${member.imageUrl}`} 
+                          src={member.imageUrl?.startsWith('http') ? member.imageUrl : `${API_URL}${member.imageUrl}`} 
                           alt={member.name} 
                           className="w-full h-full object-cover grayscale opacity-60"
                         />

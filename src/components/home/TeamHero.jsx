@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../../config';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function TeamHero() {
@@ -9,7 +10,7 @@ export default function TeamHero() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await fetch('http://localhost:5001/api/team');
+        const res = await fetch(`${API_URL}/api/team`);
         const data = await res.json();
         setMembers(data);
       } catch (err) {

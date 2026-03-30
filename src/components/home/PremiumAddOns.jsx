@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { Quote, ChevronRight, Check } from 'lucide-react';
 
@@ -10,7 +11,7 @@ export default function PremiumAddOns() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/services');
+        const { data } = await axios.get(`${API_URL}/api/services`);
         setServices(data.filter(s => s.isPremium));
       } catch (error) {
         console.error('Error fetching premium addons:', error);

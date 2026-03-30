@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { API_URL } from '../../config';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const TeamMember = ({ member }) => (
   <motion.div
@@ -10,7 +11,7 @@ const TeamMember = ({ member }) => (
   >
     <div className="relative w-48 h-64 md:w-56 md:h-80 overflow-hidden flex items-end justify-center">
       <img
-        src={member.imageUrl?.startsWith('http') ? member.imageUrl : `http://localhost:5001${member.imageUrl}`}
+        src={member.imageUrl?.startsWith('http') ? member.imageUrl : `${API_URL}${member.imageUrl}`}
         alt={member.role}
         className="w-full h-full object-cover transition-all duration-700 contrast-[1.1] brightness-[0.95] grayscale group-hover:grayscale-0 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_90%)]"
       />
@@ -32,7 +33,8 @@ export default function TeamShowcase() {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/employees');
+        const res = await fetch(`${API_URL}/api/team`);
+        const data = await res.json();
         setTeam(data);
       } catch (error) {
         console.error('Error fetching team:', error);

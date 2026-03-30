@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_URL } from '../../config';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle2, X } from 'lucide-react';
 
@@ -19,9 +20,8 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
-
     try {
-      const response = await fetch('http://localhost:5001/api/contacts', {
+      const response = await fetch(`${API_URL}/api/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

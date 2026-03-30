@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit2, X, CheckSquare, Layers } from 'lucide-react';
 
@@ -44,7 +45,7 @@ export default function ServiceManager() {
 
   const fetchItems = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5001/api/services');
+      const { data } = await axios.get(`${API_URL}/api/services`);
       console.log('Services Fetched:', data);
       setItems(data);
     } catch (err) {
@@ -64,9 +65,9 @@ export default function ServiceManager() {
     try {
       setLoading(true);
       if (editingId) {
-        await axios.put(`http://localhost:5001/api/services/${editingId}`, formData, config);
+        await axios.put(`${API_URL}/api/services/${editingId}`, formData, config);
       } else {
-        await axios.post('http://localhost:5001/api/services', formData, config);
+        await axios.post(`${API_URL}/api/services`, formData, config);
       }
       setShowForm(false);
       setEditingId(null);
@@ -81,7 +82,7 @@ export default function ServiceManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Delete this service package?')) {
-      await axios.delete(`http://localhost:5001/api/services/${id}`, {
+      await axios.delete(`${API_URL}/api/services/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       fetchItems();

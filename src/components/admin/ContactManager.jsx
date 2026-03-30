@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Mail, Phone, User, Building, MapPin, Calendar, Search, RefreshCcw } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const ContactManager = () => {
   const [contacts, setContacts] = useState([]);
@@ -11,7 +12,7 @@ const ContactManager = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch('http://localhost:5001/api/contacts', {
+      const response = await fetch(`${API_URL}/api/contacts`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -34,7 +35,7 @@ const ContactManager = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5001/api/contacts/${id}`, {
+      const response = await fetch(`${API_URL}/api/contacts/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

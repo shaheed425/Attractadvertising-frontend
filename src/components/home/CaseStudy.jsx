@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function CaseStudy() {
@@ -10,13 +11,13 @@ export default function CaseStudy() {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: targetRef });
 
-  // Step 2.2: The useEffect Hook with Absolute URL
+  // Step 2.2: The useEffect Hook with Centralized URL
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
         console.log("--- PIPELINE VERIFICATION ---");
-        // Using full absolute URL to bypass proxy issues
-        const response = await axios.get('http://localhost:5001/api/portfolios');
+        // Using centralized API_URL
+        const response = await axios.get(`${API_URL}/api/portfolios`);
         console.log("Data Received Successfully:", response.data);
         setPortfolioData(response.data);
       } catch (error) {
@@ -86,7 +87,7 @@ export default function CaseStudy() {
                 <div className="w-full md:w-1/2 aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 group-hover:border-primary/30 transition-all duration-700 bg-white/5 shadow-2xl">
                   {item?.imageUrl ? (
                     <img 
-                      src={item.imageUrl.startsWith('http') ? item.imageUrl : `http://localhost:5001${item.imageUrl}`} 
+                      src={item.imageUrl.startsWith('http') ? item.imageUrl : `${API_URL}${item.imageUrl}`} 
                       className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000" 
                       alt={item?.title || 'Project image'} 
                     />

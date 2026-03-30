@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { UserCheck, FileText, Zap, Video } from 'lucide-react';
 
 const icons = {
-  UserCheck,
-  FileText,
-  Zap,
-  Video
+  UserCheck: UserCheck,
+  FileText: FileText,
+  Zap: Zap,
+  Video: Video
 };
 
 export default function IncludedServices() {
@@ -17,7 +18,7 @@ export default function IncludedServices() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/services');
+        const { data } = await axios.get(`${API_URL}/api/services`);
         setServices(data.filter(s => !s.isPremium));
       } catch (error) {
         console.error('Error fetching included services:', error);

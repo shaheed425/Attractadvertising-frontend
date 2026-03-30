@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit2, Upload, X } from 'lucide-react';
 
@@ -27,7 +28,7 @@ export default function PortfolioManager() {
 
   const fetchItems = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5001/api/portfolios');
+      const { data } = await axios.get(`${API_URL}/api/portfolios`);
       console.log('Portfolio Data Fetched:', data);
       setItems(data);
     } catch (err) {
@@ -49,7 +50,7 @@ export default function PortfolioManager() {
 
     try {
       setLoading(true);
-      const { data } = await axios.post('http://localhost:5001/api/upload', uploadData, {
+      const { data } = await axios.post(`${API_URL}/api/upload`, uploadData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setFormData(prev => ({ ...prev, imageUrl: data }));
@@ -79,9 +80,9 @@ export default function PortfolioManager() {
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5001/api/portfolios/${editingId}`, formData, config);
+        await axios.put(`${API_URL}/api/portfolios/${editingId}`, formData, config);
       } else {
-        await axios.post('http://localhost:5001/api/portfolios', formData, config);
+        await axios.post(`${API_URL}/api/portfolios`, formData, config);
       }
       setShowForm(false);
       setEditingId(null);
@@ -96,7 +97,7 @@ export default function PortfolioManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Are you sure?')) {
-      await axios.delete(`http://localhost:5001/api/portfolios/${id}`, {
+      await axios.delete(`${API_URL}/api/portfolios/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       fetchItems();
@@ -177,7 +178,7 @@ export default function PortfolioManager() {
                 <div className="flex flex-col gap-4">
                   {(imagePreview || formData.imageUrl) && (
                     <div className="relative w-full h-56 rounded-[2rem] overflow-hidden border border-white/10 shadow-lg">
-                      <img src={imagePreview || (formData.imageUrl?.startsWith('http') ? formData.imageUrl : `http://localhost:5001${formData.imageUrl}`)} className="w-full h-full object-cover" alt="Preview" />
+                      <img src={imagePreview || (formData.imageUrl?.startsWith('http') ? formData.imageUrl : `${API_URL}${formData.imageUrl}`)} className="w-full h-full object-cover" alt="Preview" />
                       <div className="absolute inset-0 bg-white/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-black/40 backdrop-blur-md rounded-full">Active Preview</span>
                       </div>
@@ -217,7 +218,7 @@ export default function PortfolioManager() {
         {items.map(item => (
           <div key={item._id} className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] overflow-hidden group hover:shadow-2xl transition-all duration-700">
             <div className="aspect-[4/5] relative overflow-hidden">
-              <img src={item.imageUrl?.startsWith('http') ? item.imageUrl : `http://localhost:5001${item.imageUrl}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+              <img src={item.imageUrl?.startsWith('http') ? item.imageUrl : `${API_URL}${item.imageUrl}`} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-6 backdrop-blur-sm">
                 <button 
                   onClick={() => {

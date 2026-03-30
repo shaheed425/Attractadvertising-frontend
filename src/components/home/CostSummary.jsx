@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 
 export default function CostSummary() {
@@ -9,7 +10,7 @@ export default function CostSummary() {
   useEffect(() => {
     const fetchCosts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/services');
+        const { data } = await axios.get(`${API_URL}/api/services`);
         setPremiumServices(data.filter(s => s.isPremium));
       } catch (error) {
         console.error('Error fetching costs:', error);

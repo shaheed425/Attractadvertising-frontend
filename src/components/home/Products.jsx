@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, Star } from 'lucide-react';
 
@@ -12,7 +13,7 @@ export default function Products() {
       try {
         console.log("--- DEBUG START (Services) ---");
         console.log("1. Initiating API Call to backend URL: /api/services");
-        const response = await axios.get('http://localhost:5001/api/services');
+        const response = await axios.get(`${API_URL}/api/services`);
         console.log("2. Raw Response Received:", response);
         console.log("3. Data being set into React state:", response.data);
         setServices(response.data);

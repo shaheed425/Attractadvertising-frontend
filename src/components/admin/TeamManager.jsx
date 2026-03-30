@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit2, X, Upload } from 'lucide-react';
 
@@ -24,7 +25,7 @@ export default function TeamManager() {
 
   const fetchItems = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5001/api/employees');
+      const { data } = await axios.get(`${API_URL}/api/employees`);
       setItems(data);
     } catch (err) {
       console.error('Error fetching team:', err);
@@ -45,7 +46,7 @@ export default function TeamManager() {
 
     try {
       setLoading(true);
-      const { data } = await axios.post('http://localhost:5001/api/upload', uploadData, {
+      const { data } = await axios.post(`${API_URL}/api/upload`, uploadData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setFormData(prev => ({ ...prev, imageUrl: data }));
@@ -69,9 +70,9 @@ export default function TeamManager() {
     try {
       setLoading(true);
       if (editingId) {
-        await axios.put(`http://localhost:5001/api/employees/${editingId}`, formData, config);
+        await axios.put(`${API_URL}/api/employees/${editingId}`, formData, config);
       } else {
-        await axios.post('http://localhost:5001/api/employees', formData, config);
+        await axios.post(`${API_URL}/api/employees`, formData, config);
       }
       setShowForm(false);
       setEditingId(null);
@@ -87,7 +88,7 @@ export default function TeamManager() {
 
   const handleDelete = async (id) => {
     if (confirm('Remove this team member?')) {
-      await axios.delete(`http://localhost:5001/api/employees/${id}`, {
+      await axios.delete(`${API_URL}/api/employees/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       fetchItems();
@@ -153,7 +154,7 @@ export default function TeamManager() {
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Neural Profile Asset</label>
                 {(imagePreview || formData.imageUrl) && (
                   <div className="w-full h-56 bg-white/5 rounded-[2rem] overflow-hidden border border-white/10 shadow-inner">
-                    <img src={imagePreview || (formData.imageUrl?.startsWith('http') ? formData.imageUrl : `http://localhost:5001${formData.imageUrl}`)} className="w-full h-full object-cover grayscale brightness-90" alt="Preview" />
+                    <img src={imagePreview || (formData.imageUrl?.startsWith('http') ? formData.imageUrl : `${API_URL}${formData.imageUrl}`)} className="w-full h-full object-cover grayscale brightness-90" alt="Preview" />
                   </div>
                 )}
                 
@@ -191,7 +192,7 @@ export default function TeamManager() {
           <div key={item._id} className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 flex flex-col items-center text-center group transition-all duration-700 shadow-2xl">
             <div className="relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden mb-8 shadow-2xl">
               <img 
-                src={item.imageUrl?.startsWith('http') ? item.imageUrl : `http://localhost:5001${item.imageUrl}`} 
+                src={item.imageUrl?.startsWith('http') ? item.imageUrl : `${API_URL}${item.imageUrl}`} 
                 className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 scale-100 group-hover:scale-110" 
                 alt={item.name} 
               />

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
+import { API_URL } from '../../config';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ExternalLink, Eye } from 'lucide-react';
 
 export default function Portfolio() {
@@ -11,7 +12,7 @@ export default function Portfolio() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5001/api/portfolios');
+        const { data } = await axios.get(`${API_URL}/api/portfolios`);
         setProjects(data);
       } catch (error) {
         console.error('Error fetching portfolio:', error);
@@ -61,7 +62,7 @@ export default function Portfolio() {
               {/* Image Container */}
               <div className="aspect-[4/3] rounded-[2.2rem] overflow-hidden relative mb-4">
                 <img 
-                  src={project.imageUrl?.startsWith('http') ? project.imageUrl : `http://localhost:5001${project.imageUrl}`} 
+                  src={project.imageUrl?.startsWith('http') ? project.imageUrl : `${API_URL}${project.imageUrl}`} 
                   alt={project.title} 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 opacity-80 group-hover:opacity-100"
                 />

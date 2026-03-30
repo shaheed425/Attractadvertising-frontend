@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink, ShieldCheck, Zap, BarChart3 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -14,7 +15,7 @@ export default function ProjectDetail() {
     window.scrollTo(0, 0);
     const fetchProject = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/portfolio/${id}`);
+        const { data } = await axios.get(`${API_URL}/api/portfolio/${id}`);
         setProject(data);
       } catch (err) {
         console.error('Error fetching project:', err);
@@ -98,7 +99,7 @@ export default function ProjectDetail() {
             className="aspect-[21/9] rounded-[3rem] overflow-hidden border border-primary/5 shadow-2xl relative group"
           >
             <img 
-               src={project.imageUrl?.startsWith('http') ? project.imageUrl : `http://localhost:5001${project.imageUrl}`} 
+               src={project.imageUrl?.startsWith('http') ? project.imageUrl : `${API_URL}${project.imageUrl}`} 
                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
                alt={project.title} 
             />

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import { motion } from 'framer-motion';
 
 export default function Logos() {
@@ -9,7 +10,7 @@ export default function Logos() {
   useEffect(() => {
     const fetchLogos = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/logos');
+        const response = await axios.get(`${API_URL}/api/logos`);
         setLogos(response.data);
       } catch (err) {
         console.error("API Fetch Failed (Logos):", err);
@@ -87,7 +88,7 @@ export default function Logos() {
                   <div className="flex flex-col items-center gap-3 group/item text-center">
                     {logo.logoUrl && (
                       <img 
-                        src={logo.logoUrl.startsWith('http') ? logo.logoUrl : `http://localhost:5001${logo.logoUrl}`} 
+                        src={logo.logoUrl.startsWith('http') ? logo.logoUrl : `${API_URL}${logo.logoUrl}`} 
                         alt={logo.clientName} 
                         className="max-h-8 md:max-h-12 w-auto object-contain opacity-70 grayscale group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-700 invert"
                       />
