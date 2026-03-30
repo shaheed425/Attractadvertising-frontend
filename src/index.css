@@ -10,12 +10,16 @@
 }
 
 @layer base {
+  html {
+    @apply overflow-x-hidden scroll-smooth;
+  }
+
   body {
-    @apply bg-black text-[#A1A1AA] font-body selection:bg-primary/30 selection:text-white overflow-x-hidden;
+    @apply bg-black text-[#A1A1AA] font-body selection:bg-primary/30 selection:text-white overflow-x-hidden w-full;
   }
   
-  html {
-    scroll-behavior: smooth;
+  section {
+    scroll-margin-top: 100px;
   }
 }
 

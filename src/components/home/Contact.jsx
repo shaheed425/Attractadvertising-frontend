@@ -24,14 +24,14 @@ export default function Contact({ toggleContactModal }) {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-6xl md:text-9xl font-display font-black text-[#A1A1AA] tracking-tighter mb-10 leading-[0.9] uppercase">
+            <h2 className="text-[10vw] md:text-9xl font-display font-black text-[#A1A1AA] tracking-tighter mb-10 leading-[0.9] uppercase">
               BE <span className="text-[#A1A1AA] opacity-40">SEEN.</span> <br />
-              <span className="text-[#A1A1AA]/10">EVERYWHERE.</span>
+              <span className="text-[#A1A1AA]/10 text-[8vw] md:text-9xl">EVERYWHERE.</span>
             </h2>
             <div className="flex flex-col items-center gap-8">
-              <p className="text-xl md:text-2xl text-[#A1A1AA]/40 max-w-2xl mx-auto leading-relaxed font-medium">
+              <p className="text-lg md:text-2xl text-[#A1A1AA]/40 max-w-2xl mx-auto leading-relaxed font-medium">
                 Contact us to book your slot! <br />
-                <span className="text-[#A1A1AA] font-black text-3xl md:text-5xl border-b-4 border-[#A1A1AA] pb-2 mt-4 inline-block tracking-tighter">+91 85902 04464</span>
+                <span className="text-[#A1A1AA] font-black text-2xl md:text-5xl border-b-2 md:border-b-4 border-[#A1A1AA] pb-2 mt-4 inline-block tracking-tighter">+91 85902 04464</span>
               </p>
 
               <motion.button

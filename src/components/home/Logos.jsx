@@ -60,7 +60,7 @@ export default function Logos() {
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-[#A1A1AA]/20 text-[10px] font-black uppercase tracking-[1em] block"
+            className="text-[#A1A1AA]/20 text-[8px] md:text-[10px] font-black uppercase tracking-[0.5em] md:tracking-[1em] block"
           >
             Global Partner Network
           </motion.span>
@@ -73,7 +73,7 @@ export default function Logos() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: (i % 6) * 0.05 }}
-              className="relative w-[180px] md:w-[208px] aspect-[16/10] flex-shrink-0 flex items-center justify-center border border-white/5 bg-white/[0.01] rounded-2xl group hover:bg-white/[0.03] hover:border-transparent transition-all duration-300"
+              className="relative w-[150px] md:w-[208px] aspect-[16/10] flex-shrink-0 flex items-center justify-center border border-white/5 bg-white/[0.01] rounded-2xl group hover:bg-white/[0.03] hover:border-transparent transition-all duration-300"
             >
               {/* Corner Marker (Bottom-Right) - Minimal grey */}
               <div className="absolute -right-[3px] -bottom-[3px] w-[6px] h-[6px] bg-white/5 group-hover:bg-white/20 rounded-full z-20 transition-all duration-500" />

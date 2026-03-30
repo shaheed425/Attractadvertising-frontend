@@ -16,7 +16,7 @@ const CorePackage = () => {
           className="text-center mb-16"
         >
           <span className="text-white opacity-40 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 block">Pricing Overview</span>
-          <h2 className="text-5xl md:text-7xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase">
+          <h2 className="text-2xl md:text-7xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase leading-tight">
             THE <span className="text-[#A1A1AA]/40">CORE</span> PACKAGE
           </h2>
         </motion.div>
@@ -42,8 +42,8 @@ const CorePackage = () => {
                         <IndianRupee size={32} />
                     </div>
                     <div>
-                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[10px] mb-1 font-bold">Hourly Rate</p>
-                        <h3 className="text-4xl font-display font-black text-[#5B49AD]">₹1,000<span className="text-lg text-[#A1A1AA]/40 italic font-medium">/hr</span></h3>
+                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[8px] md:text-[10px] mb-1 font-bold">Hourly Rate</p>
+                        <h3 className="text-xl md:text-4xl font-display font-black text-[#5B49AD]">₹1,000<span className="text-sm md:text-lg text-[#A1A1AA]/40 italic font-medium">/hr</span></h3>
                     </div>
                 </div>
 
@@ -52,9 +52,9 @@ const CorePackage = () => {
                         <Clock size={32} />
                     </div>
                     <div>
-                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[10px] mb-1 font-bold">Minimum Booking</p>
-                        <h3 className="text-4xl font-display font-black text-[#5B49AD]">4 Hours</h3>
-                        <p className="text-primary text-xs font-bold mt-1 uppercase tracking-widest">₹4,000 Total</p>
+                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[8px] md:text-[10px] mb-1 font-bold">Minimum Booking</p>
+                        <h3 className="text-2xl md:text-4xl font-display font-black text-[#5B49AD]">4 Hours</h3>
+                        <p className="text-primary text-[10px] md:text-xs font-bold mt-1 uppercase tracking-widest">₹4,000 Total</p>
                     </div>
                 </div>
 
@@ -63,9 +63,9 @@ const CorePackage = () => {
                         <Zap size={32} />
                     </div>
                     <div>
-                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[10px] mb-1 font-bold">Maximum Per Day</p>
-                        <h3 className="text-4xl font-display font-black text-[#5B49AD]">5 Hours</h3>
-                        <p className="text-primary text-xs font-bold mt-1 uppercase tracking-widest">₹5,000 Total</p>
+                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[8px] md:text-[10px] mb-1 font-bold">Maximum Per Day</p>
+                        <h3 className="text-2xl md:text-4xl font-display font-black text-[#5B49AD]">5 Hours</h3>
+                        <p className="text-primary text-[10px] md:text-xs font-bold mt-1 uppercase tracking-widest">₹5,000 Total</p>
                     </div>
                 </div>
              </div>

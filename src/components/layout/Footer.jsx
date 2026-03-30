@@ -13,11 +13,11 @@ export default function Footer() {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="text-3xl font-display font-black text-white mb-8 tracking-tighter uppercase"
+              className="text-2xl md:text-3xl font-display font-black text-white mb-8 tracking-tighter uppercase"
             >
               ATTRACT<span className="text-white opacity-40">.</span>
             </motion.div>
-            <p className="text-lg text-white/40 leading-relaxed mb-6 max-w-xs font-medium italic">
+            <p className="text-sm md:text-lg text-white/40 leading-relaxed mb-6 max-w-xs font-medium italic">
               "STOP WAITING FOR CUSTOMERS TO FIND YOU. WALK YOUR BRAND STRAIGHT TO THEM."
             </p>
             <a

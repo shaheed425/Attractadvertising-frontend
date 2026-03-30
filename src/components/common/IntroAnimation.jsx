@@ -50,11 +50,11 @@ const IntroAnimation = ({ onComplete }) => {
       case 'bold': return 'font-display font-black text-6xl md:text-8xl tracking-tighter uppercase';
       case 'script': return "font-['Pinyon_Script'] text-5xl md:text-7xl lowercase opacity-90 tracking-wide brightness-125";
       case 'medium': return 'font-body font-medium text-lg md:text-2xl mt-4 opacity-70 tracking-[0.2em] uppercase text-center max-w-xl';
-      case 'kinetic': return 'font-display font-black text-7xl md:text-9xl tracking-tight uppercase glitch-text';
-      case 'logo-font': return 'font-display font-black text-6xl md:text-8xl tracking-tighter uppercase text-primary drop-shadow-[0_0_15px_rgba(255,107,0,0.5)]';
-      case 'final': return 'font-display font-black text-7xl md:text-9xl tracking-tighter uppercase';
-      case 'final-hold': return 'font-display font-black text-7xl md:text-9xl tracking-tighter uppercase';
-      default: return 'text-4xl';
+      case 'kinetic': return 'font-display font-black text-[12vw] md:text-9xl tracking-tight uppercase glitch-text px-4';
+      case 'logo-font': return 'font-display font-black text-[10vw] md:text-8xl tracking-tighter uppercase text-primary drop-shadow-[0_0_15px_rgba(255,107,0,0.5)]';
+      case 'final': return 'font-display font-black text-[12vw] md:text-9xl tracking-tighter uppercase';
+      case 'final-hold': return 'font-display font-black text-[12vw] md:text-9xl tracking-tighter uppercase';
+      default: return 'text-2xl';
     }
   };
 

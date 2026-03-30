@@ -56,10 +56,10 @@ export default function PremiumAddOns() {
           className="mb-20 md:mb-32"
         >
           <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[8px] md:text-[10px] mb-6 block">Maximize Your Reach</span>
-          <h2 className="text-4xl md:text-8xl font-display font-black tracking-tighter text-[#A1A1AA] leading-none mb-8 uppercase">
+          <h2 className="text-xl md:text-8xl font-display font-black tracking-tighter text-[#A1A1AA] leading-none mb-8 uppercase">
             PREMIUM <span className="text-[#A1A1AA]/40">ADD-ONS.</span>
           </h2>
-          <p className="text-[#A1A1AA]/60 max-w-2xl text-base md:text-lg leading-relaxed lowercase italic font-medium">
+          <p className="text-[#A1A1AA]/60 max-w-2xl text-sm md:text-lg leading-relaxed lowercase italic font-medium">
             (Optional Services)
           </p>
         </motion.div>
@@ -77,22 +77,22 @@ export default function PremiumAddOns() {
               >
                 <div className="lg:col-span-5 space-y-6 md:space-y-8">
                   <div className="space-y-4">
-                    <h3 className="text-3xl md:text-7xl font-display font-black text-[#A1A1AA] leading-tight uppercase tracking-tighter">
+                    <h3 className="text-lg md:text-7xl font-display font-black text-[#A1A1AA] leading-tight uppercase tracking-tighter">
                       <span className="text-primary">{prefix}.</span> {service.displayTitle}
                     </h3>
-                    <p className="text-[#A1A1AA] font-bold text-base md:text-lg">{service.price}</p>
+                    <p className="text-[#A1A1AA] font-bold text-sm md:text-lg">{service.price}</p>
                   </div>
-                  <p className="text-[#A1A1AA]/60 font-bold text-xl leading-relaxed">
+                  <p className="text-[#A1A1AA]/60 font-bold text-base md:text-xl leading-relaxed">
                     {service.description}
                   </p>
                   
                   <div className="pt-10 flex flex-col gap-4">
                     <span className="text-[#A1A1AA]/40 text-[10px] font-black uppercase tracking-[0.4em]">Section Branding</span>
-                    <div className="text-primary font-display font-black text-4xl opacity-10 tracking-tighter uppercase">ATTRACT<br />ADVERTISING</div>
+                    <div className="text-primary font-display font-black text-2xl md:text-4xl opacity-10 tracking-tighter uppercase">ATTRACT<br />ADVERTISING</div>
                   </div>
                 </div>
 
-                <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-[4rem] p-12 md:p-16 shadow-2xl relative overflow-hidden group/box transition-all duration-700 hover:border-white/20">
+                <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-[4rem] p-8 md:p-16 shadow-2xl relative overflow-hidden group/box transition-all duration-700 hover:border-white/20">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/box:opacity-100 transition-opacity duration-1000" />
                   
                   <div className="space-y-12 relative z-10">
@@ -103,10 +103,10 @@ export default function PremiumAddOns() {
                               <Check size={16} strokeWidth={4} />
                             </div>
                             <div className="space-y-2">
-                              <h4 className="text-[#A1A1AA] font-display font-black text-2xl tracking-tight group-hover/item:text-primary transition-colors">
+                              <h4 className="text-[#A1A1AA] font-display font-black text-xl md:text-2xl tracking-tight group-hover/item:text-primary transition-colors">
                                 {detail.label}
                               </h4>
-                              <p className="text-[#A1A1AA]/60 leading-relaxed font-medium">
+                              <p className="text-[#A1A1AA]/60 leading-relaxed font-medium text-sm md:text-base">
                                 {detail.content}
                               </p>
                             </div>
@@ -116,7 +116,7 @@ export default function PremiumAddOns() {
                   </div>
                   
                   <div className="mt-16 pt-8 border-t border-white/10 text-center relative z-10">
-                    <span className="text-[#A1A1AA]/20 font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[10px]">BE SEEN. EVERYWHERE.</span>
+                    <span className="text-[#A1A1AA]/20 font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[8px] md:text-[10px]">BE SEEN. EVERYWHERE.</span>
                   </div>
                 </div>
               </motion.div>
@@ -134,13 +134,13 @@ export default function PremiumAddOns() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:border-primary transition-all group shadow-2xl"
+                className="p-8 md:p-10 rounded-[3rem] bg-white/5 border border-white/10 hover:border-primary transition-all group shadow-2xl"
               >
                 <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-xl font-display font-black text-[#A1A1AA] group-hover:text-primary transition-colors tracking-tight uppercase leading-tight">{item.title}</h3>
-                  <span className="text-primary font-bold text-lg whitespace-nowrap ml-4">{item.price}</span>
+                  <h3 className="text-base md:text-lg font-display font-black text-[#A1A1AA] group-hover:text-primary transition-colors tracking-tight uppercase leading-tight">{item.title}</h3>
+                  <span className="text-primary font-bold text-xs md:text-sm whitespace-nowrap ml-4">{item.price}</span>
                 </div>
-                <p className="text-[#A1A1AA]/60 text-sm leading-relaxed italic font-medium">"{item.description}"</p>
+                <p className="text-[#A1A1AA]/60 text-xs md:text-sm leading-relaxed italic font-medium">"{item.description}"</p>
               </motion.div>
             ))}
           </div>

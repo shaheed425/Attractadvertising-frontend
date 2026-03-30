@@ -39,7 +39,7 @@ export default function FAQ() {
           className="text-center mb-16 md:mb-24"
         >
           <span className="text-white/40 font-bold uppercase tracking-[0.6em] text-[8px] md:text-[10px] mb-4 md:mb-6 block">Inquiry</span>
-          <h2 className="text-4xl md:text-8xl font-display font-black text-white leading-none uppercase tracking-tighter italic">
+          <h2 className="text-2xl md:text-8xl font-display font-black text-white leading-none uppercase tracking-tighter italic">
             Frequently <br className="md:hidden" />
             <span className="text-white/20">Asked</span> <br />
             Questions.
@@ -60,7 +60,7 @@ export default function FAQ() {
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between text-left group"
               >
-                <h3 className={`text-xl md:text-4xl font-display font-black transition-all duration-500 uppercase tracking-tighter leading-tight ${openIndex === index ? 'text-white' : 'text-white/20 group-hover:text-white/40'}`}>
+                <h3 className={`text-lg md:text-4xl font-display font-black transition-all duration-500 uppercase tracking-tighter leading-tight ${openIndex === index ? 'text-white' : 'text-white/20 group-hover:text-white/40'}`}>
                   {faq.question}
                 </h3>
                 <div className={`w-10 h-10 md:w-14 md:h-14 rounded-full border flex items-center justify-center transition-all duration-500 ${openIndex === index ? 'bg-[#5B49AD] border-primary rotate-180 text-white shadow-[0_0_20px_rgba(91,73,173,0.3)]' : 'border-white/10 text-white/40 group-hover:border-white group-hover:text-white'}`}>
@@ -76,7 +76,7 @@ export default function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <div className="pb-10 pl-4 md:pl-20 text-[#A1A1AA]/60 leading-relaxed text-xl max-w-4xl font-medium">
+                    <div className="pb-10 pl-4 md:pl-20 text-[#A1A1AA]/60 leading-relaxed text-lg max-w-4xl font-medium px-4">
                       {faq.answer}
                     </div>
                   </motion.div>
