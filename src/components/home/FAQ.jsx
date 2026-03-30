@@ -32,44 +32,44 @@ export default function FAQ() {
     <section className="py-32 bg-black px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none" />
       <div className="max-w-[1200px] mx-auto relative z-10">
-        <div className="text-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Inquiry</span>
-            <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter text-[#A1A1AA] leading-[0.9]">
-              Frequently Asked <br /> <span className="text-[#A1A1AA]/20">Questions.</span>
-            </h2>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 md:mb-24"
+        >
+          <span className="text-white/40 font-bold uppercase tracking-[0.6em] text-[8px] md:text-[10px] mb-4 md:mb-6 block">Inquiry</span>
+          <h2 className="text-4xl md:text-8xl font-display font-black text-white leading-none uppercase tracking-tighter italic">
+            Frequently <br className="md:hidden" />
+            <span className="text-white/20">Asked</span> <br />
+            Questions.
+          </h2>
+        </motion.div>
 
-        <div className="flex flex-col border-t border-white/10">
-          {faqs.map((faq, i) => (
-            <motion.div 
-              key={i} 
+        <div className="space-y-6 md:space-y-8">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="border-b border-white/10"
+              transition={{ delay: index * 0.1 }}
+              className="border-b border-white/5 pb-6 md:pb-8"
             >
               <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full py-10 flex items-center justify-between text-left group transition-all"
-                data-cursor="Toggle"
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full flex items-center justify-between text-left group"
               >
-                <span className={`text-2xl md:text-4xl font-display font-black transition-all duration-500 transform ${openIndex === i ? 'text-[#A1A1AA] translate-x-4' : 'text-[#A1A1AA]/40 group-hover:text-white'}`}>
+                <h3 className={`text-xl md:text-4xl font-display font-black transition-all duration-500 uppercase tracking-tighter leading-tight ${openIndex === index ? 'text-white' : 'text-white/20 group-hover:text-white/40'}`}>
                   {faq.question}
-                </span>
-                <div className={`w-14 h-14 rounded-full border flex items-center justify-center transition-all duration-500 ${openIndex === i ? 'bg-[#5B49AD] border-primary rotate-180 text-white shadow-[0_0_20px_rgba(91,73,173,0.3)]' : 'border-white/10 text-[#A1A1AA]/40 group-hover:border-white group-hover:text-white'}`}>
-                  {openIndex === i ? <Minus size={24} /> : <Plus size={24} />}
+                </h3>
+                <div className={`w-10 h-10 md:w-14 md:h-14 rounded-full border flex items-center justify-center transition-all duration-500 ${openIndex === index ? 'bg-[#5B49AD] border-primary rotate-180 text-white shadow-[0_0_20px_rgba(91,73,173,0.3)]' : 'border-white/10 text-white/40 group-hover:border-white group-hover:text-white'}`}>
+                  {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
                 </div>
               </button>
               
               <AnimatePresence>
-                {openIndex === i && (
+                {openIndex === index && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}

@@ -70,27 +70,27 @@ const ContactModal = ({ isOpen, onClose }) => {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-[3rem] p-8 md:p-12 relative shadow-2xl overflow-hidden"
+          className="w-full max-w-2xl bg-[#0A0A0A] border border-white/10 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-12 relative shadow-2xl overflow-hidden"
         >
-          <div className="absolute top-0 right-0 p-8">
+          <div className="absolute top-0 right-0 p-4 md:p-8">
             <button 
               onClick={onClose}
-              className="p-3 text-white/20 hover:text-white hover:bg-white/5 rounded-2xl transition-all"
+              className="p-2 md:p-3 text-white/20 hover:text-white hover:bg-white/5 rounded-2xl transition-all"
             >
-              <X size={24} />
+              <X size={20} md:size={24} />
             </button>
           </div>
 
-          <div className="mb-10">
-            <h3 className="text-4xl font-black text-white uppercase tracking-tight flex items-center gap-4">
+          <div className="mb-8 md:mb-10">
+            <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight flex items-center gap-4">
              For Enquiry
               <div className="h-1 w-12 bg-[#5B49AD] rounded-full" />
             </h3>
-            <p className="text-white/40 mt-2 font-medium italic">Transform your brand's digital presence today.</p>
+            <p className="text-white/40 mt-2 font-medium italic text-xs md:text-base">Transform your brand's digital presence today.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">Company Name</label>
                 <input
@@ -99,7 +99,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   value={formData.companyName}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10 text-sm md:text-base"
                   placeholder="Your Agency / Company"
                 />
               </div>
@@ -111,7 +111,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                   value={formData.clientName}
                   onChange={handleChange}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10 text-sm md:text-base"
                   placeholder="Full Name"
                 />
               </div>

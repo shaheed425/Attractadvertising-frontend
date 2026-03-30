@@ -53,34 +53,34 @@ export default function PremiumAddOns() {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="mb-32"
+          className="mb-20 md:mb-32"
         >
-          <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Maximize Your Reach</span>
-          <h2 className="text-5xl md:text-8xl font-display font-black tracking-tighter text-[#A1A1AA] leading-none mb-8">
+          <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[8px] md:text-[10px] mb-6 block">Maximize Your Reach</span>
+          <h2 className="text-4xl md:text-8xl font-display font-black tracking-tighter text-[#A1A1AA] leading-none mb-8 uppercase">
             PREMIUM <span className="text-[#A1A1AA]/40">ADD-ONS.</span>
           </h2>
-          <p className="text-[#A1A1AA]/60 max-w-2xl text-lg leading-relaxed lowercase italic font-medium">
+          <p className="text-[#A1A1AA]/60 max-w-2xl text-base md:text-lg leading-relaxed lowercase italic font-medium">
             (Optional Services)
           </p>
         </motion.div>
 
         {/* Dynamic Prefixed Sections (A, B, C...) */}
         {prefixes.map((prefix) => (
-          <div key={prefix} className="mb-40">
+          <div key={prefix} className="mb-24 md:mb-40">
             {groupedServices[prefix].map((service) => (
               <motion.div
                 key={service._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-start"
               >
-                <div className="lg:col-span-5 space-y-8">
+                <div className="lg:col-span-5 space-y-6 md:space-y-8">
                   <div className="space-y-4">
-                    <h3 className="text-5xl md:text-7xl font-display font-black text-[#A1A1AA] leading-tight uppercase tracking-tighter">
+                    <h3 className="text-3xl md:text-7xl font-display font-black text-[#A1A1AA] leading-tight uppercase tracking-tighter">
                       <span className="text-primary">{prefix}.</span> {service.displayTitle}
                     </h3>
-                    <p className="text-[#A1A1AA] font-bold text-lg">{service.price}</p>
+                    <p className="text-[#A1A1AA] font-bold text-base md:text-lg">{service.price}</p>
                   </div>
                   <p className="text-[#A1A1AA]/60 font-bold text-xl leading-relaxed">
                     {service.description}
@@ -116,7 +116,7 @@ export default function PremiumAddOns() {
                   </div>
                   
                   <div className="mt-16 pt-8 border-t border-white/10 text-center relative z-10">
-                    <span className="text-[#A1A1AA]/20 font-black uppercase tracking-[0.5em] text-[10px]">BE SEEN. EVERYWHERE.</span>
+                    <span className="text-[#A1A1AA]/20 font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-[10px]">BE SEEN. EVERYWHERE.</span>
                   </div>
                 </div>
               </motion.div>

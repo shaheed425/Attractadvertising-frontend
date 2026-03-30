@@ -32,20 +32,19 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 block">Our Track Record</span>
-          <h2 className="text-3xl md:text-5xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase italic">
+          <span className="text-[#A1A1AA]/40 font-bold uppercase tracking-[0.5em] text-[8px] md:text-[10px] mb-4 block">Our Track Record</span>
+          <h2 className="text-2xl md:text-5xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase italic leading-none">
             PREVIOUS <span className="text-[#A1A1AA]/40">WORK.</span>
           </h2>
         </motion.div>
 
         <div 
-          className="grid grid-rows-2 grid-flow-col gap-8 md:gap-10 overflow-x-auto pb-12 pt-4 px-4 -mx-4 custom-scrollbar scroll-smooth"
+          className="grid grid-rows-2 grid-flow-col gap-6 md:gap-10 overflow-x-auto pb-8 md:pb-12 pt-4 px-4 -mx-4 custom-scrollbar scroll-smooth"
           style={{ 
-            gridAutoColumns: 'calc((100% - 2 * (2rem + 2.5rem)) / 3)', // Approximately 3 columns per row
-            // On md screens and up, we want 3 columns to fit nicely in 1100px
-            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' // Fallback
+            gridAutoColumns: 'calc((100% - 2 * (1.5rem + 2rem)) / 1.2)', // Better fit for mobile
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' 
           }}
         >
           {projects.map((project, i) => (
@@ -55,7 +54,7 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, duration: 0.8 }}
-              className="group relative p-1 rounded-[2.5rem] bg-white/5 border border-white/10 overflow-hidden transition-all duration-500 w-[300px] md:w-[340px] flex-shrink-0 mb-4 shadow-2xl hover:bg-white/10"
+              className="group relative p-1 rounded-[2.2rem] md:rounded-[2.5rem] bg-white/5 border border-white/10 overflow-hidden transition-all duration-500 w-[280px] md:w-[340px] flex-shrink-0 mb-4 shadow-2xl hover:bg-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
               

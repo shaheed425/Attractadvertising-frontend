@@ -52,13 +52,13 @@ const ContactForm = () => {
     <div className="w-full max-w-2xl mx-auto bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden group">
       <div className="absolute inset-0 bg-gradient-to-br from-[#5B49AD]/10 to-transparent pointer-events-none" />
       
-      <h3 className="text-3xl font-black text-white mb-8 uppercase tracking-tight flex items-center gap-4">
+      <h3 className="text-2xl md:text-3xl font-black text-white mb-8 uppercase tracking-tight flex items-center gap-4">
          For Enquiry
         <div className="h-1 w-12 bg-[#5B49AD] rounded-full" />
       </h3>
 
-      <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">Company Name</label>
             <input
@@ -67,7 +67,7 @@ const ContactForm = () => {
               value={formData.companyName}
               onChange={handleChange}
               required
-              className="w-full bg-black/50 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10"
+              className="w-full bg-black/50 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10 text-sm md:text-base"
               placeholder="Your Agency / Company"
             />
           </div>
@@ -79,7 +79,7 @@ const ContactForm = () => {
               value={formData.clientName}
               onChange={handleChange}
               required
-              className="w-full bg-black/50 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10"
+              className="w-full bg-black/50 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#5B49AD] transition-all placeholder:text-white/10 text-sm md:text-base"
               placeholder="Full Name"
             />
           </div>

@@ -45,11 +45,11 @@ export default function IncludedServices() {
               viewport={{ once: true }}
               className="mb-12 text-center"
             >
-              <h2 className="text-4xl md:text-6xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase mb-2">
+              <h2 className="text-3xl md:text-6xl font-display font-black tracking-tighter text-[#A1A1AA] uppercase mb-2">
                 WHAT IS INCLUDED?
               </h2>
-              <p className="text-[#A1A1AA]/60 font-bold text-lg mb-4">(Free with every booking)</p>
-              <p className="text-[#A1A1AA]/40 mx-auto max-w-md font-medium">
+              <p className="text-[#A1A1AA]/60 font-bold text-base md:text-lg mb-4">(Free with every booking)</p>
+              <p className="text-[#A1A1AA]/40 mx-auto max-w-md font-medium text-sm md:text-base">
                 When you book the core package, you get these 4 services at no extra cost:
               </p>
             </motion.div>

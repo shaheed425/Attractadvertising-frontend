@@ -109,13 +109,13 @@ const Navbar = ({ toggleContactModal }) => {
           
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden text-white p-2"
+            className="lg:hidden text-white p-2 relative z-[110]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <div className="flex flex-col gap-1.5 w-6">
-              <div className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-2 w-6' : 'w-6'}`} />
-              <div className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : 'w-4'}`} />
-              <div className={`h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-2 w-6' : 'w-5'}`} />
+              <div className={`h-0.5 bg-white transition-all duration-500 ${mobileMenuOpen ? 'rotate-45 translate-y-2 w-6' : 'w-6'}`} />
+              <div className={`h-0.5 bg-white transition-all duration-500 ${mobileMenuOpen ? 'opacity-0 scale-x-0' : 'w-4'}`} />
+              <div className={`h-0.5 bg-white transition-all duration-500 ${mobileMenuOpen ? '-rotate-45 -translate-y-2 w-6' : 'w-5'}`} />
             </div>
           </button>
         </div>
@@ -128,45 +128,38 @@ const Navbar = ({ toggleContactModal }) => {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-black z-[101] flex flex-col p-10 lg:hidden"
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[101] flex flex-col p-8 md:p-12 lg:hidden"
           >
             <div className="flex justify-between items-center mb-16">
-              <div className="flex items-center">
-              <div className="relative h-20 w-48">
+              <div className="relative h-12 w-32">
                 <img 
                   src={logo} 
                   alt="Attract Advertising" 
-                  className="absolute top-1/2 left-0 -translate-y-1/2 h-[120px] w-auto max-w-none object-contain"
+                  className="absolute top-1/2 left-0 -translate-y-1/2 h-[80px] w-auto object-contain"
                 />
               </div>
-              </div>
-              <button 
-                className="text-white p-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X size={32} />
-              </button>
             </div>
 
-            <div className="flex flex-col gap-8 overflow-y-auto pb-12 flex-1">
+            <div className="flex flex-col gap-6 overflow-y-auto pb-12 flex-1">
               {navLinks.map((link, i) => (
                 <motion.div 
                   key={link.name}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.1 + 0.2 }}
                 >
                   <a 
                     href={link.href} 
-                    className="text-4xl font-display font-black text-white hover:text-white/60 transition-colors block mb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-3xl md:text-5xl font-display font-black text-[#A1A1AA] hover:text-white transition-colors block mb-2 uppercase tracking-tighter"
                   >
                     {link.name}
                   </a>
                   {link.dropdown && (
-                    <div className="ml-4 flex flex-col gap-4 border-l border-white/10 pl-6">
+                    <div className="ml-4 flex flex-col gap-3 border-l border-white/10 pl-6 mt-4">
                       {link.dropdown.map(item => (
-                        <a key={item} href="#" className="text-sm font-bold uppercase tracking-widest text-white/40 hover:text-white">{item}</a>
+                        <a key={item} href="#" className="text-xs font-bold uppercase tracking-widest text-[#A1A1AA]/40 hover:text-white">{item}</a>
                       ))}
                     </div>
                   )}
@@ -174,15 +167,18 @@ const Navbar = ({ toggleContactModal }) => {
               ))}
             </div>
 
-            <button 
+            <motion.button 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
               onClick={() => {
                 setMobileMenuOpen(false);
                 toggleContactModal();
               }}
-              className="w-full tech-button !bg-[#5B49AD] !text-white py-6 text-xl mt-8 shadow-[0_0_20px_rgba(91,73,173,0.3)]"
+              className="w-full tech-button !bg-[#5B49AD] !text-white py-6 text-lg mt-8 shadow-[0_0_30px_rgba(91,73,173,0.3)] transition-transform active:scale-95"
             >
               Get in Touch
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

@@ -62,7 +62,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.1, scale: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-display font-black tracking-tighter text-white pointer-events-none select-none blur-sm uppercase"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] lg:text-[15vw] font-display font-black tracking-tighter text-white pointer-events-none select-none blur-sm uppercase whitespace-nowrap"
         >
           ATTRACT
         </motion.div>
@@ -76,12 +76,12 @@ export default function Hero() {
             >
               <motion.span 
                 variants={wordVariants}
-                className="text-[#A1A1AA] font-bold uppercase tracking-[0.4em] text-[10px] mb-6 block opacity-60"
+                className="text-[#A1A1AA] font-bold uppercase tracking-[0.4em] text-[8px] md:text-[10px] mb-6 block opacity-60"
               >
                 The Future of Mobile Street Advertising
               </motion.span>
               
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-black tracking-tighter leading-[0.9] text-[#A1A1AA] mb-8 flex flex-wrap justify-center lg:justify-start uppercase">
+              <h1 className="text-4xl md:text-7xl lg:text-8xl font-display font-black tracking-tighter leading-[0.9] text-[#A1A1AA] mb-8 flex flex-wrap justify-center lg:justify-start uppercase">
                 STOP WAITING <br />
                 FOR CUSTOMERS <br />
                 TO <span className="text-[#A1A1AA]/40">FIND YOU.</span>
@@ -89,7 +89,7 @@ export default function Hero() {
 
               <motion.p 
                 variants={wordVariants}
-                className="text-lg md:text-xl text-[#A1A1AA]/60 max-w-xl mb-12 leading-relaxed font-medium"
+                className="text-base md:text-xl text-[#A1A1AA]/60 max-w-xl mb-12 leading-relaxed font-medium"
               >
                 High-definition digital screens worn on backpacks by agents walking directly into high-traffic crowds. <span className="text-[#A1A1AA]/40">We walk your brand straight to your customers.</span>
               </motion.p>
