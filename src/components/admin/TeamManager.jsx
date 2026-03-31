@@ -96,12 +96,12 @@ export default function TeamManager() {
   };
 
   return (
-    <div className="p-10 relative min-h-screen bg-black">
+    <div className="p-4 md:p-10 relative min-h-screen bg-black">
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       
-      <div className="flex justify-between items-center mb-12 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
         <div>
-          <h1 className="text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Team Roster</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Team Roster</h1>
           <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-1">Manage the creative minds behind Attract Advertising.</p>
         </div>
         <button 
@@ -111,7 +111,7 @@ export default function TeamManager() {
             setImagePreview(null);
             setShowForm(true);
           }}
-          className="flex items-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
+          className="w-full md:w-auto flex items-center justify-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
         >
           <Plus size={20} strokeWidth={3} /> Onboard Member
         </button>
@@ -123,9 +123,9 @@ export default function TeamManager() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             data-lenis-prevent 
-            className="bg-black border border-white/10 p-12 rounded-[3.5rem] w-full max-w-xl relative shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar"
+            className="bg-black border border-white/10 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] w-full max-w-xl relative shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar"
           >
-            <button onClick={() => setShowForm(false)} className="absolute right-10 top-10 text-white/20 hover:text-white transition-colors"><X size={32} /></button>
+            <button onClick={() => setShowForm(false)} className="absolute right-6 top-6 md:right-10 md:top-10 text-white/20 hover:text-white transition-colors"><X size={24} className="md:w-8 md:h-8" /></button>
             <div className="mb-10 text-center">
               <h2 className="text-3xl font-display font-black text-white tracking-tight uppercase">{editingId ? 'Update Identity' : 'Commission Agent'}</h2>
               <div className="h-1 w-12 bg-white mx-auto mt-4 rounded-full opacity-30" />
@@ -187,7 +187,7 @@ export default function TeamManager() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mt-12 relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mt-12 relative z-10">
         {items.map(item => (
           <div key={item._id} className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 flex flex-col items-center text-center group transition-all duration-700 shadow-2xl">
             <div className="relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden mb-8 shadow-2xl">

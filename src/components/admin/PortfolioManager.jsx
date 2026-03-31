@@ -105,17 +105,17 @@ export default function PortfolioManager() {
   };
 
   return (
-    <div className="p-8 relative min-h-screen bg-black">
+    <div className="p-4 md:p-8 relative min-h-screen bg-black">
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       
-      <div className="flex justify-between items-center mb-12 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
         <div>
-          <h1 className="text-4xl font-display font-black text-white uppercase tracking-tight">Portfolio Archive</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white uppercase tracking-tight">Portfolio Archive</h1>
           <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-2">Manage your agency case studies</p>
         </div>
         <button 
           onClick={() => { setShowForm(true); setEditingId(null); setImagePreview(null); }}
-          className="flex items-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
+          className="w-full md:w-auto flex items-center justify-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
         >
           <Plus size={20} /> Add New Work
         </button>
@@ -127,7 +127,7 @@ export default function PortfolioManager() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             data-lenis-prevent 
-            className="bg-black border border-white/10 p-12 rounded-[3rem] w-full max-w-2xl relative shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
+            className="bg-black border border-white/10 p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] w-full max-w-2xl relative shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
           >
             <button onClick={() => setShowForm(false)} className="absolute right-8 top-8 text-white/20 hover:text-white transition-colors"><X size={28} /></button>
             <div className="mb-10 text-center">
@@ -135,8 +135,8 @@ export default function PortfolioManager() {
               <div className="h-1 w-12 bg-white mx-auto mt-4 rounded-full opacity-30" />
             </div>
             
-            <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-8">
-              <div className="col-span-2 space-y-2">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div className="md:col-span-2 space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Project Identity</label>
                 <input 
                   type="text" placeholder="Project Title" required 
@@ -163,7 +163,7 @@ export default function PortfolioManager() {
                 />
               </div>
               
-              <div className="col-span-2 space-y-2">
+              <div className="md:col-span-2 space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Case Study Narrative</label>
                 <textarea 
                   placeholder="Describe the mission objective and results..." 
@@ -173,18 +173,18 @@ export default function PortfolioManager() {
                 />
               </div>
               
-              <div className="col-span-2 space-y-2">
+              <div className="md:col-span-2 space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-20 ml-2">Visual Asset</label>
                 <div className="flex flex-col gap-4">
                   {(imagePreview || formData.imageUrl) && (
-                    <div className="relative w-full h-56 rounded-[2rem] overflow-hidden border border-white/10 shadow-lg">
+                    <div className="relative w-full h-40 md:h-56 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/10 shadow-lg">
                       <img src={imagePreview || (formData.imageUrl?.startsWith('http') ? formData.imageUrl : `${API_URL}${formData.imageUrl}`)} className="w-full h-full object-cover" alt="Preview" />
                       <div className="absolute inset-0 bg-white/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                         <span className="text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-black/40 backdrop-blur-md rounded-full">Active Preview</span>
                       </div>
                     </div>
                   )}
-                  <div className="border-2 border-dashed border-white/10 bg-white/5 rounded-[2rem] p-10 flex flex-col items-center gap-4 hover:border-white/50 transition-all group cursor-pointer">
+                  <div className="border-2 border-dashed border-white/10 bg-white/5 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-10 flex flex-col items-center gap-4 hover:border-white/50 transition-all group cursor-pointer text-center">
                     {loading ? (
                       <div className="flex items-center gap-4 text-white">
                         <div className="w-6 h-6 border-3 border-current border-t-transparent rounded-full animate-spin" />
@@ -192,11 +192,11 @@ export default function PortfolioManager() {
                       </div>
                     ) : (
                       <>
-                        <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shadow-sm group-hover:scale-110 transition-transform">
-                          <Upload size={24} className="text-white/20 group-hover:text-white transition-colors" />
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/5 flex items-center justify-center border border-white/10 shadow-sm group-hover:scale-110 transition-transform">
+                           <Upload size={20} className="text-white/20 group-hover:text-white transition-colors" />
                         </div>
                         <label className="cursor-pointer text-center">
-                          <span className="text-sm font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Select Studio Asset</span>
+                          <span className="text-xs md:text-sm font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Select Studio Asset</span>
                           <p className="text-[10px] font-bold text-white/20 mt-1">RAW / JPG / PNG (Max 5MB)</p>
                           <input type="file" onChange={handleFileChange} className="hidden" />
                         </label>
@@ -206,7 +206,7 @@ export default function PortfolioManager() {
                 </div>
               </div>
 
-              <button type="submit" disabled={loading} className="col-span-2 py-6 bg-[#5B49AD] text-white font-black uppercase tracking-widest rounded-[2rem] hover:shadow-[0_0_50px_rgba(91,73,173,0.4)] active:scale-[0.98] transition-all disabled:opacity-50 mt-4 shadow-[0_0_30px_rgba(91,73,173,0.3)]">
+              <button type="submit" disabled={loading} className="md:col-span-2 py-4 md:py-6 bg-[#5B49AD] text-white font-black uppercase tracking-widest rounded-[1.5rem] md:rounded-[2rem] hover:shadow-[0_0_50px_rgba(91,73,173,0.4)] active:scale-[0.98] transition-all disabled:opacity-50 mt-4 shadow-[0_0_30px_rgba(91,73,173,0.3)]">
                 {editingId ? 'Refine Deployment' : 'Launch to Archive'}
               </button>
             </form>

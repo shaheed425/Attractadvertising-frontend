@@ -143,7 +143,7 @@ const Navbar = ({ toggleContactModal }) => {
                 }}
                 className="w-full tech-button !bg-[#5B49AD] !text-white py-6 text-xl shadow-[0_0_40px_rgba(91,73,173,0.4)] transition-transform active:scale-95 uppercase font-black tracking-widest rounded-full"
               >
-                Get in Touch
+                 For Enquiry
               </motion.button>
             </div>
           </motion.div>

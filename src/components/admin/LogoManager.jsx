@@ -93,17 +93,17 @@ export default function LogoManager() {
   };
 
   return (
-    <div className="p-8 relative min-h-screen bg-black">
+    <div className="p-4 md:p-8 relative min-h-screen bg-black">
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       
-      <div className="flex justify-between items-center mb-12 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
         <div>
-          <h1 className="text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Partner Network</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Partner Network</h1>
           <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-1">Manage high-profile client logos for the main marquee.</p>
         </div>
         <button 
           onClick={() => { setShowForm(true); setImagePreview(null); }}
-          className="flex items-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
+          className="w-full md:w-auto flex items-center justify-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
         >
           <Plus size={20} strokeWidth={3} /> Add Partner
         </button>
@@ -115,9 +115,9 @@ export default function LogoManager() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             data-lenis-prevent 
-            className="bg-black border border-white/10 p-12 rounded-[3.5rem] w-full max-w-lg relative shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar"
+            className="bg-black border border-white/10 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] w-full max-w-lg relative shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar"
           >
-            <button onClick={() => setShowForm(false)} className="absolute right-10 top-10 text-white/20 hover:text-white transition-colors"><X size={32} /></button>
+            <button onClick={() => setShowForm(false)} className="absolute right-6 top-6 md:right-10 md:top-10 text-white/20 hover:text-white transition-colors"><X size={24} className="md:w-8 md:h-8" /></button>
             <div className="mb-10 text-center">
               <h2 className="text-3xl font-display font-black text-white tracking-tight uppercase">Onboard Partner</h2>
               <div className="h-1 w-12 bg-white mx-auto mt-4 rounded-full opacity-30" />
@@ -170,7 +170,7 @@ export default function LogoManager() {
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8 relative z-10">
         {items.map(item => (
           <div key={item._id} className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-10 flex flex-col items-center gap-8 group relative hover:shadow-2xl transition-all duration-700">
             <button 
@@ -180,8 +180,8 @@ export default function LogoManager() {
             >
               <Trash2 size={18} />
             </button>
-            <div className="w-28 h-28 flex items-center justify-center p-2">
-              <img src={item.logoUrl?.startsWith('http') ? item.logoUrl : `${API_URL}${item.logoUrl}`} alt={item.clientName} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-40 group-hover:opacity-100 scale-90 group-hover:scale-110 invert" />
+            <div className="w-full h-36 flex items-center justify-center">
+              <img src={item.logoUrl?.startsWith('http') ? item.logoUrl : `${API_URL}${item.logoUrl}`} alt={item.clientName} className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-40 group-hover:opacity-100 scale-110 group-hover:scale-125 invert" />
             </div>
             <div className="w-full pt-6 border-t border-white/10">
               <p className="text-white opacity-40 text-[10px] uppercase font-black tracking-[0.3em] text-center leading-none">{item.clientName}</p>

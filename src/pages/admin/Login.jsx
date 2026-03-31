@@ -47,9 +47,9 @@ export default function Login() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white/5 backdrop-blur-3xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl relative z-10"
+        className="w-full max-w-md bg-white/5 backdrop-blur-3xl border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl relative z-10"
       >
-        <h2 className="text-3xl font-display font-black text-center mb-10 text-white tracking-tight uppercase">Clearance Required</h2>
+        <h2 className="text-2xl md:text-3xl font-display font-black text-center mb-8 md:mb-10 text-white tracking-tight uppercase">Clearance Required</h2>
         
         {error && <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-xl mb-6 text-sm text-center font-medium">{error}</div>}
 

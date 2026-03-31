@@ -73,7 +73,7 @@ export default function Logos() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: (i % 6) * 0.05 }}
-              className="relative w-[150px] md:w-[208px] aspect-[16/10] flex-shrink-0 flex items-center justify-center border border-white/5 bg-white/[0.01] rounded-2xl group hover:bg-white/[0.03] hover:border-transparent transition-all duration-300"
+              className="relative w-[180px] md:w-[220px] aspect-[16/10] flex-shrink-0 flex items-center justify-center border border-white/5 bg-white/[0.01] rounded-2xl group hover:bg-white/[0.03] hover:border-transparent transition-all duration-300"
             >
               {/* Corner Marker (Bottom-Right) - Minimal grey */}
               <div className="absolute -right-[3px] -bottom-[3px] w-[6px] h-[6px] bg-white/5 group-hover:bg-white/20 rounded-full z-20 transition-all duration-500" />
@@ -83,22 +83,22 @@ export default function Logos() {
                  <div className="absolute -left-[3px] -top-[3px] w-[6px] h-[6px] bg-white/5 rounded-full z-20" />
               )}
 
-              <div className="p-8 w-full h-full flex items-center justify-center">
+              <div className="p-8 md:p-6 w-full h-full flex items-center justify-center">
                 {!logo.isPlaceholder ? (
                   <div className="flex flex-col items-center gap-3 group/item text-center">
                     {logo.logoUrl && (
                       <img 
                         src={logo.logoUrl.startsWith('http') ? logo.logoUrl : `${API_URL}${logo.logoUrl}`} 
                         alt={logo.clientName} 
-                        className="max-h-8 md:max-h-12 w-auto object-contain opacity-70 grayscale group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-700 invert"
+                        className="max-h-12 md:max-h-14 w-auto object-contain opacity-70 grayscale group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-700 invert group-hover/item:scale-110"
                       />
                     )}
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover/item:text-white/80 transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 group-hover/item:text-white/60 transition-colors">
                       {logo.clientName}
                     </span>
                   </div>
                 ) : (
-                  <div className="w-12 h-1 bg-white/5 rounded-full opacity-50" />
+                  <div className="w-12 h-[1px] bg-white/5 rounded-full opacity-50" />
                 )}
               </div>
             </motion.div>

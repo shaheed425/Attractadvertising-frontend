@@ -102,12 +102,12 @@ export default function ServiceManager() {
   };
 
   return (
-    <div className="p-10 relative min-h-screen bg-black">
+    <div className="p-4 md:p-10 relative min-h-screen bg-black">
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       
-      <div className="flex justify-between items-center mb-12 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
         <div>
-          <h1 className="text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Service Protocols</h1>
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Service Protocols</h1>
           <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-1">Configure your agency's product tiers and base pricing.</p>
         </div>
         <button 
@@ -116,7 +116,7 @@ export default function ServiceManager() {
             setFormData({ title: '', description: '', price: '', isPremium: false, details: [] });
             setShowForm(true);
           }}
-          className="flex items-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
+          className="w-full md:w-auto flex items-center justify-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
         >
           <Plus size={20} strokeWidth={3} /> New Package
         </button>
@@ -128,9 +128,9 @@ export default function ServiceManager() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             data-lenis-prevent 
-            className="bg-black border border-white/10 p-12 rounded-[3.5rem] w-full max-w-xl relative shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
+            className="bg-black border border-white/10 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] w-full max-w-xl relative shadow-2xl overflow-y-auto max-h-[90vh] custom-scrollbar"
           >
-            <button onClick={() => setShowForm(false)} className="absolute right-10 top-10 text-white/20 hover:text-white transition-colors"><X size={32} /></button>
+            <button onClick={() => setShowForm(false)} className="absolute right-6 top-6 md:right-10 md:top-10 text-white/20 hover:text-white transition-colors"><X size={24} className="md:w-8 md:h-8" /></button>
             <div className="mb-10 text-center">
               <h2 className="text-3xl font-display font-black text-white tracking-tight uppercase">{editingId ? 'Modify Offering' : 'Engineer Service'}</h2>
               <div className="h-1 w-12 bg-white mx-auto mt-4 rounded-full opacity-30" />
@@ -155,24 +155,28 @@ export default function ServiceManager() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Base Investment</label>
                   <input 
-                    type="text" placeholder="e.g. ₹5,000+" required 
+                    type="text" placeholder="e.g. ₹5,000+"  
                     value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})}
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white focus:border-white outline-none font-black shadow-sm"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Clearance Level</label>
-                  <label className="flex items-center justify-center gap-3 cursor-pointer bg-white/5 h-[68px] rounded-2xl border border-white/10 select-none group hover:bg-white/10 transition-all shadow-sm">
-                    <input 
-                      type="checkbox" checked={formData.isPremium} 
-                      onChange={e => setFormData({...formData, isPremium: e.target.checked})}
-                      className="accent-white w-6 h-6 rounded-lg"
-                    />
+                  <label className="flex items-center justify-between gap-3 cursor-pointer bg-white/5 h-[68px] rounded-2xl border border-white/10 px-6 select-none group hover:bg-white/10 transition-all shadow-sm">
                     <span className="text-white/40 text-[10px] font-black uppercase tracking-widest group-hover:text-white transition-colors">Elite Status</span>
+                    <div className="relative inline-flex items-center cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        className="sr-only peer"
+                        checked={formData.isPremium} 
+                        onChange={e => setFormData({...formData, isPremium: e.target.checked})}
+                      />
+                      <div className="w-12 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white/40 peer-checked:after:bg-white after:border-white/10 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#5B49AD]"></div>
+                    </div>
                   </label>
                 </div>
               </div>
@@ -213,9 +217,9 @@ export default function ServiceManager() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12 relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 mt-12 relative z-10">
         {items.map(item => (
-          <div key={item._id} className={`bg-white/5 backdrop-blur-3xl border rounded-[3rem] p-12 flex flex-col justify-between group transition-all duration-700 shadow-2xl ${item.isPremium ? 'border-white/20 bg-white/10' : 'border-white/10 hover:border-white/20'}`}>
+          <div key={item._id} className={`bg-white/5 backdrop-blur-3xl border rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 flex flex-col justify-between group transition-all duration-700 shadow-2xl ${item.isPremium ? 'border-white/20 bg-white/10' : 'border-white/10 hover:border-white/20'}`}>
             <div className="space-y-8">
               <div className="flex items-start justify-between">
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center border transition-all duration-500 group-hover:scale-110 shadow-lg ${item.isPremium ? 'bg-[#5B49AD] text-white border-primary shadow-[0_0_20px_rgba(91,73,173,0.3)]' : 'bg-white/5 text-white border-white/10 shadow-xl'}`}>

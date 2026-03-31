@@ -57,29 +57,29 @@ const ContactManager = () => {
   );
 
   return (
-    <div className="p-8 pb-24">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-        <div>
-          <h1 className="text-4xl font-display font-black text-white uppercase tracking-tight mb-2">
+    <div className="p-4 md:p-8 pb-24">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
+        <div className="space-y-2">
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white uppercase tracking-tight">
             Inbound <span className="text-[#5B49AD]">Leads</span>
           </h1>
-          <p className="text-white/40 font-medium">Manage and respond to client inquiries from the website.</p>
+          <p className="text-white/40 font-medium text-sm md:text-base">Manage and respond to client inquiries from the website.</p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="relative group">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <div className="relative group flex-1 sm:flex-none">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#5B49AD] transition-colors" size={18} />
             <input 
               type="text" 
               placeholder="Search leads..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-3.5 text-sm text-white focus:outline-none focus:border-[#5B49AD] transition-all w-64"
+              className="bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-3.5 text-sm text-white focus:outline-none focus:border-[#5B49AD] transition-all w-full sm:w-64"
             />
           </div>
           <button 
             onClick={fetchContacts}
-            className="p-3.5 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-white hover:bg-white/10 transition-all"
+            className="flex items-center justify-center p-3.5 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-white hover:bg-white/10 transition-all"
           >
             <RefreshCcw size={20} className={loading ? 'animate-spin' : ''} />
           </button>
@@ -115,14 +115,14 @@ const ContactManager = () => {
                   </button>
                 </div>
 
-                <div className="flex items-start gap-6">
-                  <div className="w-16 h-16 bg-[#5B49AD]/20 rounded-2xl flex items-center justify-center text-[#5B49AD]">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                  <div className="w-16 h-16 bg-[#5B49AD]/20 rounded-2xl flex items-center justify-center text-[#5B49AD] shrink-0">
                     <User size={28} />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">{contact.clientName}</h3>
-                    <div className="flex items-center gap-2 text-[#5B49AD] text-[10px] font-bold uppercase tracking-widest">
-                      <Building size={12} />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1 truncate">{contact.clientName}</h3>
+                    <div className="flex items-center gap-2 text-[#5B49AD] text-[10px] font-bold uppercase tracking-widest truncate">
+                      <Building size={12} className="shrink-0" />
                       {contact.companyName}
                     </div>
                   </div>
