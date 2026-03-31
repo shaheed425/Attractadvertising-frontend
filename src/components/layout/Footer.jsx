@@ -36,10 +36,10 @@ export default function Footer() {
             </a>
             <div className="flex gap-4">
               {[
+                // { icon: <Facebook size={20} />, label: 'Facebook', href: '', isSpecial: true },
                 { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://www.instagram.com/Stackxxio_/' },
                 { icon: <Twitter size={20} />, label: 'Twitter', href: '#' },
                 { icon: <Linkedin size={20} />, label: 'LinkedIn', href: '#' },
-                { icon: <Facebook size={20} />, label: 'Facebook', href: '#' },
               ].map((social, i) => (
                 <motion.a
                   key={i}
@@ -47,7 +47,11 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -5, scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-                  className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:border-white hover:text-white transition-all duration-300 shadow-2xl"
+                  className={`${
+                    social.isSpecial 
+                      ? "w-14 h-14 border border-white/5 bg-white/5 group-hover:bg-white/10 group-hover:text-white group-hover:border-white/20" 
+                      : "w-12 h-12 border border-white/10 bg-white/5 text-white/40 hover:border-white hover:text-white"
+                  } rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl group`}
                   title={social.label}
                 >
                   {social.icon}

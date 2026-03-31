@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, Instagram, Youtube, Facebook, Linkedin, Twitter, ArrowRight } from 'lucide-react';
 
 const socials = [
+  { name: 'Facebook', icon: <Facebook size={20} />, href: 'https://www.facebook.com/share/1G8G9G7S2r/' },
   { name: 'attract.advertising', icon: <Instagram size={20} />, href: 'https://www.instagram.com/attract.advertising?igsh=MXQ3aDJlbjJneHI1dw==' },
   { name: 'YouTube', icon: <Youtube size={20} />, href: '#' },
-  { name: 'Facebook', icon: <Facebook size={20} />, href: '#' },
   { name: 'LinkedIn', icon: <Linkedin size={20} />, href: '#' },
   { name: 'X (Twitter)', icon: <Twitter size={20} />, href: '#' },
 ];
@@ -38,10 +38,10 @@ export default function Contact({ toggleContactModal }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={toggleContactModal}
-                className="tech-button !bg-[#5B49AD] !text-white text-2xl px-16 py-10 flex items-center gap-4 group shadow-[0_0_30px_rgba(91,73,173,0.3)] hover:shadow-[0_0_50px_rgba(91,73,173,0.5)] mt-8"
+                className="tech-button !bg-[#5B49AD] !text-white text-lg md:text-2xl px-8 md:px-16 py-4 md:py-10 flex items-center gap-4 group shadow-[0_0_30px_rgba(91,73,173,0.3)] hover:shadow-[0_0_50px_rgba(91,73,173,0.5)] mt-8"
                 data-cursor="Let's Go"
               >
-                For Enquiry <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform" />
+                For Enquiry <ArrowRight className="w-5 h-5 md:w-7 md:h-7 group-hover:translate-x-2 transition-transform" />
               </motion.button>
             </div>
           </motion.div>

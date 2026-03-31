@@ -47,21 +47,21 @@ const IntroAnimation = ({ onComplete }) => {
 
   const getTextStyle = (type) => {
     switch (type) {
-      case 'bold': return 'font-display font-black text-6xl md:text-8xl tracking-tighter uppercase';
-      case 'script': return "font-['Pinyon_Script'] text-5xl md:text-7xl lowercase opacity-90 tracking-wide brightness-125";
-      case 'medium': return 'font-body font-medium text-lg md:text-2xl mt-4 opacity-70 tracking-[0.2em] uppercase text-center max-w-xl';
-      case 'kinetic': return 'font-display font-black text-[12vw] md:text-9xl tracking-tight uppercase glitch-text px-4';
-      case 'logo-font': return 'font-display font-black text-[10vw] md:text-8xl tracking-tighter uppercase text-primary drop-shadow-[0_0_15px_rgba(255,107,0,0.5)]';
-      case 'final': return 'font-display font-black text-[12vw] md:text-9xl tracking-tighter uppercase';
-      case 'final-hold': return 'font-display font-black text-[12vw] md:text-9xl tracking-tighter uppercase';
-      default: return 'text-2xl';
+      case 'bold': return 'font-display font-black text-[clamp(2.5rem,12vw,6rem)] md:text-8xl tracking-tighter uppercase leading-none';
+      case 'script': return "font-['Pinyon_Script'] text-[clamp(2rem,10vw,5rem)] md:text-7xl lowercase opacity-90 tracking-wide brightness-125 leading-none";
+      case 'medium': return 'font-body font-medium text-[clamp(0.875rem,3vw,1.5rem)] md:text-2xl mt-6 opacity-70 tracking-[0.2em] uppercase text-center px-4 max-w-[90vw] md:max-w-2xl';
+      case 'kinetic': return 'font-display font-black text-[clamp(2rem,12vw,7rem)] md:text-9xl tracking-tight uppercase glitch-text px-4 leading-none';
+      case 'logo-font': return 'font-display font-black text-[clamp(2.5rem,12vw,8rem)] md:text-8xl tracking-tighter uppercase text-primary drop-shadow-[0_0_15px_rgba(255,107,0,0.5)] leading-none';
+      case 'final': return 'font-display font-black text-[clamp(3rem,15vw,10rem)] md:text-9xl tracking-tighter uppercase leading-none';
+      case 'final-hold': return 'font-display font-black text-[clamp(2rem,5vw,5rem)] md:text-9xl tracking-tighter uppercase leading-none';
+      default: return 'text-xl md:text-2xl';
     }
   };
 
   const currentWord = words[index] || words[words.length - 1];
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden cursor-none">
+    <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden cursor-none p-4">
       <svg className="hidden">
         <filter id="glitch">
           <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
@@ -73,7 +73,7 @@ const IntroAnimation = ({ onComplete }) => {
         </filter>
       </svg>
 
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -90,9 +90,9 @@ const IntroAnimation = ({ onComplete }) => {
               filter: 'blur(20px)',
               transition: { duration: 0.2, ease: "easeIn" }
             }}
-            className="flex flex-col items-center justify-center text-center px-6"
+            className="flex flex-col items-center justify-center text-center w-full max-w-full overflow-hidden"
           >
-            <span className={`${getTextStyle(currentWord.type)} text-white relative`}>
+            <span className={`${getTextStyle(currentWord.type)} text-white relative inline-block max-w-full`}>
               {currentWord.text}
               {currentWord.type === 'kinetic' && (
                 <motion.span 
@@ -110,7 +110,7 @@ const IntroAnimation = ({ onComplete }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-4 font-serif italic text-3xl text-white/60"
+                className="mt-4 font-serif italic text-[clamp(1.25rem,5vw,2.5rem)] md:text-3xl text-white/60"
                >
                  Advertising
                </motion.div>
@@ -121,9 +121,9 @@ const IntroAnimation = ({ onComplete }) => {
         {/* Special handling for 'BE SEEN.' + 'EVERYWHERE.' */}
         {index >= words.length - 2 && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mt-4 font-display font-black text-2xl md:text-3xl tracking-[0.3em] uppercase opacity-40"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-2 md:mt-4 font-display font-black text-[clamp(1rem,5vw,2rem)] md:text-3xl tracking-[0.2em] md:tracking-[0.4em] uppercase opacity-20 text-center px-4 leading-none"
           >
             {index === words.length - 1 ? 'EVERYWHERE.' : ''}
           </motion.div>
@@ -135,7 +135,7 @@ const IntroAnimation = ({ onComplete }) => {
         animate={{ opacity: 0.7 }}
         whileHover={{ opacity: 1, scale: 1.05 }}
         onClick={onComplete}
-        className="fixed bottom-10 right-10 z-[10000] px-6 py-2 bg-[#5B49AD]/20 backdrop-blur-md border border-[#5B49AD]/40 rounded-full text-[#5B49AD] text-xs font-bold uppercase tracking-widest hover:text-white hover:bg-[#5B49AD]/60 hover:shadow-[0_0_20px_rgba(91,73,173,0.3)] transition-all cursor-pointer"
+        className="fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:translate-x-0 z-[10000] px-6 py-2 bg-[#5B49AD]/20 backdrop-blur-md border border-[#5B49AD]/40 rounded-full text-[#5B49AD] text-[10px] md:text-xs font-bold uppercase tracking-widest hover:text-white hover:bg-[#5B49AD]/60 hover:shadow-[0_0_20px_rgba(91,73,173,0.3)] transition-all cursor-pointer whitespace-nowrap"
       >
         Skip Intro
       </motion.button>
