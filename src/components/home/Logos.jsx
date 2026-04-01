@@ -106,5 +106,5 @@ export default function Logos() {
         </div>
       </div>
     </section>
-  );
+  ); 
 }

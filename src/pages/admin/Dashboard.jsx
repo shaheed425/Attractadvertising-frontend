@@ -37,7 +37,7 @@ export default function Dashboard() {
   const token = localStorage.getItem('adminToken');
   
   if (!token) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/AnasAdmin" replace />;
   }
 
   return (
