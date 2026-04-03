@@ -76,7 +76,7 @@ export default function TeamShowcase() {
           >
             <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <motion.div
-                className={`flex gap-16 md:gap-24 items-end ${team.length === 1 ? 'justify-start md:justify-center w-full' : ''}`}
+                className={`flex gap-16 md:gap-24 items-end ${team.length === 1 ? 'justify-center md:justify-center w-full' : ''}`}
                 animate={isPaused || team.length <= 1 ? {} : { x: ["0%", "-100%"] }}
                 transition={{
                   x: {
