@@ -101,8 +101,8 @@ export default function TeamManager() {
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
         <div>
-          <h1 className="text-3xl md:text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Team Roster</h1>
-          <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-1">Manage the creative minds behind Attract Advertising.</p>
+          <h1 className="text-3xl md:text-4xl font-display font-black text-white mb-2 uppercase tracking-tight">Founder Management</h1>
+          <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] mt-1">Manage the core identity of the agency.</p>
         </div>
         <button 
           onClick={() => {
@@ -113,7 +113,7 @@ export default function TeamManager() {
           }}
           className="w-full md:w-auto flex items-center justify-center gap-3 bg-[#5B49AD] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:scale-[1.05] active:scale-[0.95] transition-all shadow-[0_0_30px_rgba(91,73,173,0.3)]"
         >
-          <Plus size={20} strokeWidth={3} /> Onboard Member
+          <Plus size={20} strokeWidth={3} /> {items.length > 0 ? 'Change Founder Identity' : 'Set Founder Identity'}
         </button>
       </div>
 
@@ -127,13 +127,13 @@ export default function TeamManager() {
           >
             <button onClick={() => setShowForm(false)} className="absolute right-6 top-6 md:right-10 md:top-10 text-white/20 hover:text-white transition-colors"><X size={24} className="md:w-8 md:h-8" /></button>
             <div className="mb-10 text-center">
-              <h2 className="text-3xl font-display font-black text-white tracking-tight uppercase">{editingId ? 'Update Identity' : 'Commission Agent'}</h2>
+              <h2 className="text-3xl font-display font-black text-white tracking-tight uppercase">{editingId ? 'Update Identity' : 'Establish Founder'}</h2>
               <div className="h-1 w-12 bg-white mx-auto mt-4 rounded-full opacity-30" />
             </div>
             
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Agent Name</label>
+                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white opacity-40 ml-2">Founder Name</label>
                 <input 
                   type="text" placeholder="Full Name" required 
                   value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
@@ -180,7 +180,7 @@ export default function TeamManager() {
               </div>
 
               <button type="submit" disabled={loading} className="w-full py-6 bg-[#5B49AD] text-white font-black uppercase tracking-widest rounded-2xl hover:shadow-[0_0_50px_rgba(91,73,173,0.4)] active:scale-[0.98] transition-all disabled:opacity-50 mt-4 shadow-[0_0_30px_rgba(91,73,173,0.3)]">
-                {loading ? 'Processing...' : (editingId ? 'Update Roster' : 'Finalize Onboarding')}
+                {loading ? 'Processing...' : (editingId ? 'Update Identity' : 'Finalize Profile')}
               </button>
             </form>
           </motion.div>
