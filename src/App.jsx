@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SmoothScroll from './components/layout/SmoothScroll';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
+import ScheduledBooking from './pages/ScheduledBooking';
 import Dashboard from './pages/admin/Dashboard';
 import Login from './pages/admin/Login';
 import IntroAnimation from './components/common/IntroAnimation';
@@ -38,6 +39,7 @@ function App() {
             <SmoothScroll>
               <Routes>
                 <Route path="/" element={<Home toggleContactModal={toggleContactModal} />} />
+                <Route path="/scheduled" element={<ScheduledBooking toggleContactModal={toggleContactModal} />} />
                 <Route path="/project/:id" element={<ProjectDetail toggleContactModal={toggleContactModal} />} />
                 <Route path="/AnasAdmin" element={<Login />} />
                 <Route path="/admin/*" element={<Dashboard />} />

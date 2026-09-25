@@ -7,6 +7,9 @@ import ServiceManager from '../../components/admin/ServiceManager';
 import LogoManager from '../../components/admin/LogoManager';
 import TeamManager from '../../components/admin/TeamManager';
 import ContactManager from '../../components/admin/ContactManager';
+import ScheduleManager from '../../components/admin/ScheduleManager';
+import SettingsManager from '../../components/admin/SettingsManager';
+import TestimonialManager from '../../components/admin/TestimonialManager';
 
 const DashboardHome = () => (
   <div className="p-4 md:p-8 relative min-h-full">
@@ -16,6 +19,8 @@ const DashboardHome = () => (
     
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12 relative z-10">
       {[
+        { title: 'Scheduled', count: 'Bookings & Slots', color: 'bg-[#5B49AD]/20 text-[#5B49AD] border-[#5B49AD]/30' },
+        { title: 'Settings', count: 'Payment QR & Video', color: 'bg-white/5 text-white border-white/10' },
         { title: 'Portfolio', count: 'Case Studies', color: 'bg-white/5 text-white border-white/10' },
         { title: 'Services', count: 'Packages', color: 'bg-white/5 text-white border-white/10' },
         { title: 'Logos', count: 'Partners', color: 'bg-white/5 text-white border-white/10' }
@@ -61,12 +66,14 @@ export default function Dashboard() {
       <div className={`flex-1 md:ml-64 min-h-screen overflow-y-auto bg-black md:rounded-l-[3rem] md:my-4 shadow-2xl md:border md:border-white/10 transition-all duration-300 ${isSidebarOpen ? 'blur-sm md:blur-none pointer-events-none md:pointer-events-auto' : ''}`}>
         <Routes>
           <Route path="/" element={<DashboardHome />} />
+          <Route path="scheduled" element={<ScheduleManager />} />
+          <Route path="settings" element={<SettingsManager />} />
           <Route path="projects" element={<PortfolioManager />} />
           <Route path="services" element={<ServiceManager />} />
           <Route path="logos" element={<LogoManager />} />
           <Route path="team" element={<TeamManager />} />
           <Route path="leads" element={<ContactManager />} />
-          <Route path="testimonials" element={<div className="p-8 text-white/20 lowercase italic">Testimonials Management Coming Soon</div>} />
+          <Route path="testimonials" element={<TestimonialManager />} />
         </Routes>
       </div>
     </div>

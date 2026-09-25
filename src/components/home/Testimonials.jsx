@@ -1,115 +1,109 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-
-const MOCK_TESTIMONIALS = [
-  {
-    id: 1,
-    clientName: 'Sarah Connor',
-    company: 'SkyNet Solutions',
-    message: "TotalX delivered a cloud-scale enterprise dashboard that transformed our data visualization. Their expertise in React and Node.js is unmatched.",
-    avatarUrl: 'https://randomuser.me/api/portraits/women/44.jpg'
-  },
-  {
-    id: 2,
-    clientName: 'Bruce Wayne',
-    company: 'Wayne Enterprises',
-    message: "The Flutter mobile application they built is incredibly fluid. The attention to detail in the UI/UX design reflects their premium quality.",
-    avatarUrl: 'https://randomuser.me/api/portraits/men/46.jpg'
-  },
-  {
-    id: 3,
-    clientName: 'Tony Stark',
-    company: 'Stark Industries',
-    message: "From hardware integration to high-performance web portals, TotalX is our go-to partner for cutting-edge technology solutions.",
-    avatarUrl: 'https://randomuser.me/api/portraits/men/32.jpg'
-  }
-];
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Star, Quote, Sparkles, MessageSquare, Building2, User } from 'lucide-react';
+import axios from 'axios';
+import { API_URL } from '../../config';
+import { getStoredTestimonials } from '../admin/TestimonialManager';
 
 export default function Testimonials() {
-  const [index, setIndex] = useState(0);
+  const [testimonials, setTestimonials] = useState(getStoredTestimonials());
 
-  const nextSlide = () => {
-    setIndex((prev) => (prev + 1) % MOCK_TESTIMONIALS.length);
-  };
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data } = await axios.get(`${API_URL}/api/testimonials`);
+        if (Array.isArray(data) && data.length > 0) {
+          setTestimonials(data);
+        }
+      } catch (err) {
+        console.warn('Frontend testimonials API fetch fallback:', err);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
-  const prevSlide = () => {
-    setIndex((prev) => (prev === 0 ? MOCK_TESTIMONIALS.length - 1 : prev - 1));
-  };
+  const displayList = testimonials.filter((t) => t.isFeatured !== false);
 
   return (
-    <section className="py-32 relative w-full px-6 max-w-[1400px] mx-auto z-10">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-[150px] -z-10 rounded-full pointer-events-none" />
+    <section className="py-24 md:py-32 relative overflow-hidden bg-black font-body">
+      {/* Grid background & purple blur glow */}
+      <div className="absolute inset-0 bg-grid opacity-15 pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#5B49AD]/10 blur-[150px] pointer-events-none -z-10" />
 
-      <div className="text-center mb-20">
-        <span className="text-primary font-bold uppercase tracking-[0.4em] text-xs mb-6 block">Testimonials</span>
-        <h2 className="text-4xl md:text-6xl font-display font-black tracking-tighter text-white">
-          Trusted by <span className="text-primary">Industry Leaders.</span>
+      {/* Section Header */}
+      <div className="px-4 sm:px-6 md:px-12 max-w-7xl mx-auto mb-16 text-center space-y-4">
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5B49AD] flex items-center justify-center gap-2">
+          <Sparkles size={14} /> CLIENT TESTIMONIALS & REVIEWS
+        </span>
+        <h2 className="text-3xl sm:text-5xl font-display font-black text-white uppercase tracking-tight">
+          Real Impact<span className="text-[#5B49AD]">.</span> Verified Results<span className="text-white opacity-30">.</span>
         </h2>
+        <p className="text-sm md:text-base text-[#A1A1AA] max-w-2xl mx-auto font-medium">
+          See how leading enterprise brands and event organizers dominate street footfall using Attract’s walking billboard backpack screens.
+        </p>
       </div>
 
-      <div className="relative glass-card p-12 md:p-20 rounded-[3rem] overflow-hidden min-h-[400px] flex items-center justify-center border-white/5">
-        <Quote className="absolute top-12 left-12 text-primary/10" size={120} />
-        
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 text-center flex flex-col items-center"
-          >
-            <p className="text-2xl md:text-4xl font-display font-bold text-white leading-tight mb-12 max-w-4xl italic">
-              "{MOCK_TESTIMONIALS[index].message}"
-            </p>
-            <div className="flex items-center gap-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full" />
-                <img 
-                  src={MOCK_TESTIMONIALS[index].avatarUrl} 
-                  alt={MOCK_TESTIMONIALS[index].clientName}
-                  className="w-16 h-16 rounded-full border-2 border-primary object-cover relative z-10"
+      {/* Static Responsive Grid Container (No Auto-Scroll) */}
+      <div className="px-4 sm:px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {displayList.map((item, index) => (
+            <motion.div
+              key={item.id || item._id || index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="glass-card p-6 md:p-8 rounded-[2.5rem] flex flex-col justify-between space-y-6 relative overflow-hidden group border border-white/10 hover:border-[#5B49AD]/60 hover:shadow-[0_0_30px_rgba(91,73,173,0.2)] transition-all duration-500"
+            >
+              {/* Background Quote Watermark Icon */}
+              <Quote
+                size={100}
+                className="absolute -right-4 -bottom-4 text-white/[0.03] group-hover:text-[#5B49AD]/10 transition-colors pointer-events-none"
+              />
+
+              <div className="space-y-4 relative z-10">
+                {/* Rating Stars & Badge */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    {[...Array(item.rating || 5)].map((_, i) => (
+                      <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
+                    ))}
+                  </div>
+
+                  <span className="text-[9px] px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/60 font-bold uppercase tracking-widest flex items-center gap-1">
+                    <MessageSquare size={10} className="text-[#5B49AD]" /> VERIFIED REVIEW
+                  </span>
+                </div>
+
+                {/* Testimonial Quote Text */}
+                <p className="text-xs md:text-sm text-white/80 leading-relaxed font-medium italic">
+                  "{item.reviewText}"
+                </p>
+              </div>
+
+              {/* Client Info Footer */}
+              <div className="flex items-center gap-4 pt-4 border-t border-white/10 relative z-10">
+                <img
+                  src={
+                    item.avatar ||
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+                  }
+                  alt={item.clientName}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-[#5B49AD] shadow-md group-hover:scale-105 transition-transform"
                 />
+                <div className="truncate">
+                  <h4 className="text-sm font-bold text-white uppercase tracking-tight truncate">{item.clientName}</h4>
+                  <p className="text-[10px] text-[#5B49AD] font-bold uppercase tracking-wider truncate">
+                    {item.companyName || 'Corporate Client'}
+                  </p>
+                  {item.designation && <p className="text-[9px] text-white/40 truncate">{item.designation}</p>}
+                </div>
               </div>
-              <div className="text-left">
-                <h4 className="font-display font-black text-xl text-white">{MOCK_TESTIMONIALS[index].clientName}</h4>
-                <p className="text-sm font-bold uppercase tracking-widest text-primary">{MOCK_TESTIMONIALS[index].company}</p>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Navigation Arrows */}
-        <div className="absolute bottom-8 right-12 flex gap-4">
-          <button 
-            onClick={prevSlide} 
-            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300"
-            data-cursor="Prev"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <button 
-            onClick={nextSlide} 
-            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300"
-            data-cursor="Next"
-          >
-            <ChevronRight size={24} />
-          </button>
+            </motion.div>
+          ))}
         </div>
-      </div>
-
-      {/* Pagination Dots */}
-      <div className="flex justify-center gap-3 mt-12">
-        {MOCK_TESTIMONIALS.map((_, i) => (
-          <button 
-            key={i} 
-            onClick={() => setIndex(i)}
-            className={`h-1 rounded-full transition-all duration-500 ${i === index ? 'w-12 bg-primary' : 'w-4 bg-white/10 hover:bg-white/30'}`}
-          />
-        ))}
       </div>
     </section>
   );
 }
+

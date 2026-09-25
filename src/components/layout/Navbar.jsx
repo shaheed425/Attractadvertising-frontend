@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/logo.png';
 
 const Navbar = ({ toggleContactModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,30 +18,47 @@ const Navbar = ({ toggleContactModal }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Included', href: '#included' },
-    { name: 'Add-Ons', href: '#addons' },
-    { name: 'Summary', href: '#summary' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Pricing', href: '/#pricing' },
+    { name: 'Included', href: '/#included' },
+    { name: 'Add-Ons', href: '/#addons' },
+    { name: 'Summary', href: '/#summary' },
+    { name: 'Contact', href: '/#contact' },
+    { name: 'Scheduled', href: '/scheduled' },
   ];
 
   const handleNavClick = (href) => {
     setMobileMenuOpen(false);
-    if (href === '#') {
+
+    if (href === '/scheduled') {
+      navigate('/scheduled');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const element = document.querySelector(href);
+
+    if (location.pathname !== '/') {
+      navigate(href);
+      return;
+    }
+
+    if (href === '/' || href === '#') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const targetId = href.replace('/#', '#');
+    const element = document.querySelector(targetId);
     if (element) {
-      const offset = 80; // Adjust based on navbar height
+      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: 'smooth',
       });
+    } else {
+      navigate(href);
     }
   };
 
@@ -50,7 +70,7 @@ const Navbar = ({ toggleContactModal }) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="relative h-12 md:h-16 w-40 md:w-48 cursor-pointer group"
-          onClick={() => handleNavClick('#')}
+          onClick={() => handleNavClick('/')}
         >
           <img 
             src={logo} 
@@ -61,25 +81,31 @@ const Navbar = ({ toggleContactModal }) => {
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link, i) => (
-            <motion.div 
-              key={link.name} 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="relative group"
-            >
-              <button 
-                onClick={() => handleNavClick(link.href)}
-                className="text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-1.5 py-2 text-[#A1A1AA]/60 hover:text-white"
+          {navLinks.map((link, i) => {
+            const isActive = link.href === '/scheduled' ? location.pathname === '/scheduled' : (location.pathname === '/' && link.href === '/');
+            return (
+              <motion.div 
+                key={link.name} 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="relative group"
               >
-                {link.name}
-              </button>
+                <button 
+                  onClick={() => handleNavClick(link.href)}
+                  className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 flex items-center gap-1.5 py-2 ${isActive ? 'text-white' : 'text-[#A1A1AA]/60 hover:text-white'}`}
+                >
+                  {link.name}
+                  {link.href === '/scheduled' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#5B49AD] animate-pulse" />
+                  )}
+                </button>
 
-              {/* Hover Dot Indicator */}
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#5B49AD] rounded-full scale-0 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_10px_#5B49AD]" />
-            </motion.div>
-          ))}
+                {/* Hover / Active Dot Indicator */}
+                <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#5B49AD] rounded-full transition-transform duration-300 shadow-[0_0_10px_#5B49AD] ${isActive ? 'scale-100' : 'scale-0 group-hover:scale-100'}`} />
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Right Action */}
@@ -117,17 +143,22 @@ const Navbar = ({ toggleContactModal }) => {
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed inset-0 bg-black z-[101] flex flex-col h-screen p-10 md:p-20 lg:hidden"
           >
-            <div className="flex flex-col gap-8 flex-1 pt-24">
+            <div className="flex flex-col gap-8 flex-1 pt-24 overflow-y-auto">
               {navLinks.map((link, i) => (
                 <motion.button 
                   key={link.name}
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 + 0.2 }}
+                  transition={{ delay: i * 0.08 + 0.1 }}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-2xl md:text-6xl font-display font-black text-[#A1A1AA] hover:text-white uppercase tracking-tighter hover:translate-x-4 transition-all text-left"
+                  className={`text-2xl md:text-5xl font-display font-black uppercase tracking-tighter hover:translate-x-4 transition-all text-left flex items-center justify-between ${link.href === '/scheduled' ? 'text-white' : 'text-[#A1A1AA] hover:text-white'}`}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
+                  {link.href === '/scheduled' && (
+                    <span className="text-xs px-3 py-1 bg-[#5B49AD] text-white rounded-full font-sans tracking-widest">
+                      BOOK NOW
+                    </span>
+                  )}
                 </motion.button>
               ))}
             </div>
@@ -136,12 +167,12 @@ const Navbar = ({ toggleContactModal }) => {
               <motion.button 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 0.6 }}
                 onClick={() => {
                   setMobileMenuOpen(false);
                   toggleContactModal();
                 }}
-                className="w-full tech-button !bg-[#5B49AD] !text-white py-6 text-xl shadow-[0_0_40px_rgba(91,73,173,0.4)] transition-transform active:scale-95 uppercase font-black tracking-widest rounded-full"
+                className="w-full tech-button !bg-[#5B49AD] !text-white py-5 text-lg shadow-[0_0_40px_rgba(91,73,173,0.4)] transition-transform active:scale-95 uppercase font-black tracking-widest rounded-full"
               >
                  For Enquiry
               </motion.button>

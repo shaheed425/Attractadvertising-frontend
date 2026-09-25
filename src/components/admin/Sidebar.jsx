@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Image, Settings, LogOut, Users, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, Image, Layers, LogOut, Users, MessageSquare, Calendar, Sliders } from 'lucide-react';
 
 export default function Sidebar({ isOpen, onClose }) {
   const location = useLocation();
 
   const links = [
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
+    { name: 'Scheduled', path: '/admin/scheduled', icon: <Calendar size={20} /> },
+    { name: 'Settings', path: '/admin/settings', icon: <Sliders size={20} /> },
     { name: 'Projects', path: '/admin/projects', icon: <Image size={20} /> },
-    { name: 'Services', path: '/admin/services', icon: <Settings size={20} /> },
+    { name: 'Services', path: '/admin/services', icon: <Layers size={20} /> },
     { name: 'Logos', path: '/admin/logos', icon: <Users size={20} /> },
     { name: 'Team', path: '/admin/team', icon: <Users size={20} /> },
     { name: 'Leads', path: '/admin/leads', icon: <MessageSquare size={20} /> },

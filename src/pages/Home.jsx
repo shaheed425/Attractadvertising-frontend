@@ -9,6 +9,7 @@ import IncludedServices from '../components/home/IncludedServices';
 import PremiumAddOns from '../components/home/PremiumAddOns';
 import CostSummary from '../components/home/CostSummary';
 import TeamShowcase from '../components/home/TeamShowcase';
+import Testimonials from '../components/home/Testimonials';
 import FAQ from '../components/home/FAQ';
 import Contact from '../components/home/Contact';
 import Footer from '../components/layout/Footer';
@@ -30,6 +31,7 @@ const Home = ({ toggleContactModal }) => {
         <PremiumAddOns />
         <CostSummary />
         <TeamShowcase />
+        <Testimonials />
         <FAQ />
         <Contact toggleContactModal={toggleContactModal} />
       </div>
