@@ -6,7 +6,7 @@ const IntroAnimation = ({ onComplete }) => {
   
   const words = [
     { text: 'ATTRACT', type: 'bold', duration: 1.2 },
-    { text: 'Advertising', type: 'script', duration: 1.2 },
+    { text: 'ADVERTISING', type: 'script', duration: 1.2 },
     { text: 'The Future of Mobile Street Advertising', type: 'medium', duration: 1.5 },
     { text: 'MINIMUM', type: 'kinetic', duration: 0.3 },
     { text: 'BOOKING', type: 'kinetic', duration: 0.3 },
@@ -48,13 +48,13 @@ const IntroAnimation = ({ onComplete }) => {
   const getTextStyle = (type) => {
     switch (type) {
       case 'bold': return 'font-display font-black text-[clamp(2.5rem,12vw,6rem)] md:text-8xl tracking-tighter uppercase leading-none';
-      case 'script': return "font-['Pinyon_Script'] text-[clamp(2rem,10vw,5rem)] md:text-7xl lowercase opacity-90 tracking-wide brightness-125 leading-none";
+      case 'script': return "font-['Pinyon_Script'] text-[clamp(2rem,10vw,5rem)] md:text-7xl uppercase opacity-90 tracking-wide brightness-125 leading-none";
       case 'medium': return 'font-body font-medium text-[clamp(0.875rem,3vw,1.5rem)] md:text-2xl mt-6 opacity-70 tracking-[0.2em] uppercase text-center px-4 max-w-[90vw] md:max-w-2xl';
       case 'kinetic': return 'font-display font-black text-[clamp(2rem,12vw,7rem)] md:text-9xl tracking-tight uppercase glitch-text px-4 leading-none';
       case 'logo-font': return 'font-display font-black text-[clamp(2.5rem,12vw,8rem)] md:text-8xl tracking-tighter uppercase text-primary drop-shadow-[0_0_15px_rgba(255,107,0,0.5)] leading-none';
       case 'final': return 'font-display font-black text-[clamp(3rem,15vw,10rem)] md:text-9xl tracking-tighter uppercase leading-none';
       case 'final-hold': return 'font-display font-black text-[clamp(2rem,5vw,5rem)] md:text-9xl tracking-tighter uppercase leading-none';
-      default: return 'text-xl md:text-2xl';
+      default: return 'text-xl md:text-2xl uppercase';
     }
   };
 
@@ -105,14 +105,14 @@ const IntroAnimation = ({ onComplete }) => {
               )}
             </span>
             
-            {currentWord.text === 'ATTRACT' && words[index+1]?.text === 'Advertising' && (
+            {currentWord.text === 'ATTRACT' && words[index+1]?.text === 'ADVERTISING' && (
                <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-4 font-serif italic text-[clamp(1.25rem,5vw,2.5rem)] md:text-3xl text-white/60"
+                className="mt-4 font-serif italic text-[clamp(1.25rem,5vw,2.5rem)] md:text-3xl text-white/60 uppercase"
                >
-                 Advertising
+                 ADVERTISING
                </motion.div>
             )}
           </motion.div>
