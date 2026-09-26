@@ -10,6 +10,7 @@ import ContactManager from '../../components/admin/ContactManager';
 import ScheduleManager from '../../components/admin/ScheduleManager';
 import SettingsManager from '../../components/admin/SettingsManager';
 import TestimonialManager from '../../components/admin/TestimonialManager';
+import CouponManager from '../../components/admin/CouponManager';
 
 const DashboardHome = () => (
   <div className="p-4 md:p-8 relative min-h-full">
@@ -20,6 +21,7 @@ const DashboardHome = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12 relative z-10">
       {[
         { title: 'Scheduled', count: 'Bookings & Slots', color: 'bg-[#5B49AD]/20 text-[#5B49AD] border-[#5B49AD]/30' },
+        { title: 'Coupons', count: 'Promos & Discounts', color: 'bg-[#5B49AD]/20 text-[#5B49AD] border-[#5B49AD]/30' },
         { title: 'Settings', count: 'Payment QR & Video', color: 'bg-white/5 text-white border-white/10' },
         { title: 'Portfolio', count: 'Case Studies', color: 'bg-white/5 text-white border-white/10' },
         { title: 'Services', count: 'Packages', color: 'bg-white/5 text-white border-white/10' },
@@ -67,6 +69,7 @@ export default function Dashboard() {
         <Routes>
           <Route path="/" element={<DashboardHome />} />
           <Route path="scheduled" element={<ScheduleManager />} />
+          <Route path="coupons" element={<CouponManager />} />
           <Route path="settings" element={<SettingsManager />} />
           <Route path="projects" element={<PortfolioManager />} />
           <Route path="services" element={<ServiceManager />} />

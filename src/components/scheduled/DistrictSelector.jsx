@@ -104,7 +104,7 @@ export default function DistrictSelector({ selectedDistrict, setSelectedDistrict
           <button
             type="button"
             onClick={onNext}
-            className="w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-8 py-4 uppercase text-xs tracking-[0.2em] font-bold shadow-[0_0_20px_rgba(91,73,173,0.4)] flex items-center justify-center gap-2"
+            className="w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-5 sm:px-8 py-3.5 sm:py-4 uppercase text-xs tracking-[0.15em] sm:tracking-[0.2em] font-bold shadow-[0_0_20px_rgba(91,73,173,0.4)] flex items-center justify-center gap-2"
           >
             Continue to Place Selection <ArrowRight size={16} />
           </button>

@@ -1,6 +1,25 @@
-import React, { useState } from 'react';
-import { QrCode, UploadCloud, CheckCircle2, Copy, Check, X, ShieldCheck, AlertCircle, ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+  QrCode,
+  UploadCloud,
+  CheckCircle2,
+  Copy,
+  Check,
+  X,
+  ShieldCheck,
+  AlertCircle,
+  ArrowLeft,
+  Ticket,
+  Tag,
+  Sparkles,
+  Percent,
+  Trash2,
+  Zap,
+} from 'lucide-react';
+import { API_URL } from '../../config';
 import { getStoredSettings } from '../../utils/settingsStorage';
+import { getStoredCoupons } from '../admin/CouponManager';
 
 export default function PaymentSection({
   bookingData,
@@ -16,11 +35,38 @@ export default function PaymentSection({
   const [previewUrl, setPreviewUrl] = useState(paymentScreenshot || null);
   const [dragActive, setDragActive] = useState(false);
 
+  // Coupon state
+  const [coupons, setCoupons] = useState(getStoredCoupons().filter((c) => c.status === 'Active' && c.isPublic));
+  const [inputCode, setInputCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState('');
+  const [validatingCoupon, setValidatingCoupon] = useState(false);
+
   const storedSettings = getStoredSettings();
   const upiId = ownerUpiSettings?.upiId || storedSettings?.upiId || '8590204464@ybl';
   const ownerName = ownerUpiSettings?.ownerName || storedSettings?.ownerName || 'ATTRACT ADVERTISING';
   const customQrImage = ownerUpiSettings?.qrImage || storedSettings?.qrImage;
-  const amount = bookingData.totalAmount || 4000;
+
+  const originalAmount = bookingData.totalAmount || 4000;
+
+  // Calculate dynamic payable amount
+  const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+  const finalPayableAmount = Math.max(0, originalAmount - discountAmount);
+
+  useEffect(() => {
+    fetchPublicCoupons();
+  }, []);
+
+  const fetchPublicCoupons = async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/api/coupons/public`);
+      if (Array.isArray(data) && data.length > 0) {
+        setCoupons(data);
+      }
+    } catch (err) {
+      console.warn('Public coupons API fallback to local stored coupons:', err);
+    }
+  };
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -74,177 +120,221 @@ export default function PaymentSection({
     setPaymentScreenshot('');
   };
 
+  // Coupon Validation Handler
+  const handleApplyCouponCode = async (targetCode = inputCode) => {
+    setCouponError('');
+    if (!targetCode || !targetCode.trim()) {
+      return setCouponError('Please enter a coupon code.');
+    }
+
+    const cleanCode = targetCode.trim().toUpperCase();
+    setValidatingCoupon(true);
+
+    try {
+      // Try Backend Validation Endpoint
+      const { data } = await axios.post(`${API_URL}/api/coupons/validate`, {
+        code: cleanCode,
+        originalAmount,
+      });
+
+      if (data && data.valid) {
+        setAppliedCoupon(data.coupon);
+        setInputCode(cleanCode);
+        setCouponError('');
+      } else {
+        setCouponError('Invalid coupon code.');
+      }
+    } catch (err) {
+      console.warn('Backend validation fallback to local calculation:', err);
+
+      // Local Fallback Validation
+      const allCoupons = getStoredCoupons();
+      const match = allCoupons.find((c) => c.code === cleanCode);
+
+      if (!match) {
+        setCouponError('Invalid coupon code.');
+      } else if (match.status !== 'Active') {
+        setCouponError('This coupon is currently inactive.');
+      } else if (new Date() < new Date(match.startDate)) {
+        setCouponError('This coupon promotion has not started yet.');
+      } else if (new Date() > new Date(match.expiryDate)) {
+        setCouponError('This coupon has expired.');
+      } else if (match.minimumBookingAmount > 0 && originalAmount < match.minimumBookingAmount) {
+        setCouponError(
+          `Minimum booking amount of ₹${match.minimumBookingAmount.toLocaleString()} required for this coupon.`
+        );
+      } else if (match.usageLimit > 0 && match.usageCount >= match.usageLimit) {
+        setCouponError('This coupon has reached its maximum redemption limit.');
+      } else {
+        // Calculate
+        let calcDiscount = Math.round((originalAmount * match.discountPercentage) / 100);
+        if (match.maximumDiscount > 0 && calcDiscount > match.maximumDiscount) {
+          calcDiscount = match.maximumDiscount;
+        }
+
+        const calculatedFinal = Math.max(0, originalAmount - calcDiscount);
+        setAppliedCoupon({
+          code: match.code,
+          title: match.title,
+          discountPercentage: match.discountPercentage,
+          discountAmount: calcDiscount,
+          originalAmount,
+          finalAmount: calculatedFinal,
+        });
+        setInputCode(cleanCode);
+        setCouponError('');
+      }
+    } finally {
+      setValidatingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setInputCode('');
+    setCouponError('');
+  };
+
+  // Submit Handler including Coupon Metadata
+  const handleSubmitWithCoupon = () => {
+    const finalData = {
+      originalAmount,
+      couponCode: appliedCoupon ? appliedCoupon.code : '',
+      discountPercentage: appliedCoupon ? appliedCoupon.discountPercentage : 0,
+      discountAmount: appliedCoupon ? appliedCoupon.discountAmount : 0,
+      finalAmount: finalPayableAmount,
+      totalAmount: finalPayableAmount,
+    };
+    onSubmitBooking(finalData);
+  };
+
   // Quick helper to build a high-resolution QR code URL using QuickChart QR API or custom uploaded image
-  const upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(ownerName)}&am=${amount}&cu=INR`;
+  const upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(ownerName)}&am=${finalPayableAmount}&cu=INR`;
   const qrImageUrl = customQrImage || `https://quickchart.io/qr?text=${encodeURIComponent(upiString)}&size=300&dark=5B49AD&light=ffffff&margin=1`;
 
   return (
     <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
       <div className="text-center max-w-xl mx-auto space-y-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5B49AD] flex items-center justify-center gap-2">
-          <QrCode size={14} /> Step 7 of 7 — Owner UPI Payment
+          <Sparkles size={14} /> Step 7 of 7 — Offers & Booking Confirmation
         </span>
         <h2 className="text-3xl md:text-4xl font-display font-black text-white uppercase tracking-tight">
-          Complete Your Payment
+          Coupon & Final Confirmation
         </h2>
         <p className="text-sm text-[#A1A1AA]">
-          Scan the owner's official UPI QR code, complete payment, and upload your transaction screenshot.
+          Apply your promotional coupon code to calculate final offer pricing, then confirm your scheduled campaign.
         </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl space-y-10">
+      <div className="bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl space-y-8">
         
-        {/* Section 4: Owner's QR Code & UPI Card */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          {/* QR Code Container */}
-          <div className="md:col-span-6 flex flex-col items-center justify-center bg-black/60 p-8 rounded-3xl border border-white/10 relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#5B49AD]/20 to-transparent rounded-3xl pointer-events-none" />
+        {/* APPLY COUPON SECTION */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-display font-bold text-white uppercase tracking-tight flex items-center gap-2">
+            <Ticket size={20} className="text-[#5B49AD]" /> Have a Coupon Code?
+          </h3>
 
-            <div className="text-center mb-4">
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#5B49AD] block">
-                OFFICIAL OWNER UPI QR CODE
-              </span>
-              <h3 className="text-lg font-bold text-white uppercase">{ownerName}</h3>
-            </div>
+          {!appliedCoupon ? (
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Tag size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" />
+                  <input
+                    type="text"
+                    placeholder="Enter coupon code (e.g. WELCOME20)"
+                    value={inputCode}
+                    onChange={(e) => setInputCode(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleApplyCouponCode())}
+                    className="w-full bg-black/60 border border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-white text-xs font-mono font-bold uppercase focus:outline-none focus:border-[#5B49AD]"
+                  />
+                </div>
 
-            {/* Large Scan-Ready QR Code Image */}
-            <div className="relative p-4 bg-white rounded-2xl shadow-2xl border-4 border-[#5B49AD]/40 transition-transform duration-300 group-hover:scale-105">
-              <img
-                src={qrImageUrl}
-                alt="Owner's UPI QR Code"
-                className="w-52 h-52 md:w-60 md:h-60 object-contain mx-auto rounded-lg"
-              />
-            </div>
-
-            <div className="mt-4 text-center space-y-1.5">
-              <p className="text-2xl font-display font-black text-white">₹{amount.toLocaleString()}</p>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-black uppercase tracking-wider rounded-full">
-                <span>Minimum Advance Required: ₹9</span>
-              </div>
-              <p className="text-[10px] text-[#A1A1AA] uppercase tracking-wider">Scan with GPay, PhonePe, Paytm, BHIM</p>
-            </div>
-          </div>
-
-          {/* UPI ID & Instructions */}
-          <div className="md:col-span-6 space-y-6">
-            <div className="bg-black/50 p-6 rounded-3xl border border-white/10 space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A1A1AA]">
-                Owner's Direct UPI ID
-              </span>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 px-4 py-3 rounded-2xl">
-                <span className="font-mono text-base font-bold text-white tracking-wider">{upiId}</span>
                 <button
                   type="button"
-                  onClick={handleCopyUpi}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#5B49AD] text-white text-[10px] font-bold uppercase rounded-xl hover:bg-[#5B49AD]/80 transition-all"
+                  onClick={() => handleApplyCouponCode()}
+                  disabled={validatingCoupon}
+                  className="px-8 py-3.5 bg-[#5B49AD] text-white rounded-2xl text-xs font-bold uppercase tracking-wider hover:bg-[#5B49AD]/80 transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50 shrink-0"
                 >
-                  {copied ? <Check size={14} /> : <Copy size={14} />}
-                  {copied ? 'Copied' : 'Copy'}
+                  {validatingCoupon ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      Validating...
+                    </>
+                  ) : (
+                    'Apply Coupon'
+                  )}
                 </button>
               </div>
-            </div>
 
-            {/* Step Instructions */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-[#5B49AD] flex items-center gap-2">
-                <ShieldCheck size={16} /> Payment Instructions
-              </h4>
-              <ol className="space-y-2.5 text-xs text-[#A1A1AA]">
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-[#5B49AD]/30 text-[#5B49AD] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
-                  <span>Scan the QR code using any supported UPI app on your phone.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-[#5B49AD]/30 text-[#5B49AD] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
-                  <span>Pay a minimum advance of <strong className="text-emerald-400 font-bold">₹9</strong> (or full campaign fee of <strong className="text-white font-bold">₹{amount.toLocaleString()}</strong>).</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-[#5B49AD]/30 text-[#5B49AD] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
-                  <span>Take a clear screenshot showing the successful transaction.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-[#5B49AD]/30 text-[#5B49AD] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">4</span>
-                  <span>Upload the screenshot below for booking verification.</span>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 5: Payment Screenshot Upload */}
-        <div className="pt-8 border-t border-white/10 space-y-4">
-          <div>
-            <h3 className="text-lg font-display font-bold text-white uppercase tracking-tight flex items-center gap-2">
-              <UploadCloud size={20} className="text-[#5B49AD]" /> Upload Payment Screenshot *
-            </h3>
-            <p className="text-xs text-[#A1A1AA] mt-1">
-              Please upload a clear screenshot showing the successful payment transaction.
-            </p>
-          </div>
-
-          {previewUrl ? (
-            <div className="relative bg-black/60 border border-[#5B49AD]/60 p-6 rounded-3xl flex flex-col md:flex-row items-center gap-6 shadow-xl">
-              <img
-                src={previewUrl}
-                alt="Payment Screenshot Preview"
-                className="w-40 h-40 object-cover rounded-2xl border border-white/20 shadow-md"
-              />
-              <div className="flex-1 space-y-2 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2 text-emerald-400 text-xs font-bold uppercase">
-                  <CheckCircle2 size={16} /> Screenshot Attached Successfully
+              {couponError && (
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                  <AlertCircle size={15} /> {couponError}
                 </div>
-                <p className="text-xs text-[#A1A1AA]">
-                  Your screenshot is ready for verification with this booking request.
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
-                  <label className="px-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs font-bold uppercase text-white hover:bg-white/20 transition-all cursor-pointer">
-                    Change Screenshot
-                    <input type="file" accept="image/jpeg,image/jpg,image/png,image/webp" onChange={handleFileChange} className="hidden" />
-                  </label>
-                  <button
-                    type="button"
-                    onClick={handleRemoveImage}
-                    className="px-4 py-2 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-xs font-bold uppercase hover:bg-red-500/20 transition-all flex items-center gap-1"
-                  >
-                    <X size={14} /> Remove Image
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           ) : (
-            <div
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-3xl p-8 md:p-12 text-center transition-all duration-300 cursor-pointer relative ${
-                dragActive
-                  ? 'border-[#5B49AD] bg-[#5B49AD]/20 scale-[1.01]'
-                  : 'border-white/20 bg-white/5 hover:border-[#5B49AD]/60 hover:bg-white/10'
-              }`}
-            >
-              <input
-                type="file"
-                accept="image/jpeg,image/jpg,image/png,image/webp"
-                onChange={handleFileChange}
-                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-              />
-              <div className="space-y-4 pointer-events-none">
-                <div className="w-16 h-16 rounded-full bg-[#5B49AD]/20 border border-[#5B49AD]/40 flex items-center justify-center mx-auto text-[#5B49AD]">
-                  <UploadCloud size={32} />
-                </div>
-                <div>
-                  <p className="text-base font-bold text-white uppercase">
-                    Drag & Drop or Click to Upload Payment Screenshot
+            /* APPLIED COUPON SUCCESS BANNER */
+            <div className="bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-3xl space-y-3 relative overflow-hidden">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                    <CheckCircle2 size={16} /> Coupon Applied Successfully
+                  </div>
+                  <h4 className="text-xl font-display font-bold text-white uppercase">{appliedCoupon.title || 'Promotional Offer'}</h4>
+                  <p className="text-xs text-white/60">
+                    Code <strong className="font-mono text-emerald-400">{appliedCoupon.code}</strong> applied — Saved{' '}
+                    <strong className="text-emerald-400 font-bold">₹{appliedCoupon.discountAmount.toLocaleString()}</strong> ({appliedCoupon.discountPercentage}% OFF)
                   </p>
-                  <p className="text-xs text-[#A1A1AA] mt-1">Supported Formats: JPG, JPEG, PNG, WEBP (Max 10MB)</p>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={handleRemoveCoupon}
+                  className="px-4 py-2 bg-red-500/20 border border-red-500/30 text-red-400 rounded-xl text-xs font-bold uppercase hover:bg-red-500 hover:text-white transition-all flex items-center gap-1.5 shrink-0"
+                >
+                  <Trash2 size={14} /> Remove Coupon
+                </button>
               </div>
             </div>
           )}
         </div>
 
-        {/* Error message display if missing screenshot or submission error */}
+        {/* PAYMENT DYNAMIC CALCULATION BREAKDOWN BOX */}
+        <div className="bg-black/60 border border-white/10 p-6 md:p-8 rounded-3xl space-y-4">
+          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-[#5B49AD] border-b border-white/10 pb-3">
+            Final Price Summary & Offer Calculation
+          </h4>
+
+          <div className="space-y-3 text-xs md:text-sm">
+            <div className="flex justify-between items-center text-white/70">
+              <span>Original Campaign Booking Fee</span>
+              <span className="font-mono font-bold text-white">₹{originalAmount.toLocaleString()}</span>
+            </div>
+
+            {appliedCoupon && (
+              <>
+                <div className="flex justify-between items-center text-emerald-400">
+                  <span>Applied Coupon Code ({appliedCoupon.code})</span>
+                  <span className="font-mono font-bold">{appliedCoupon.discountPercentage}% OFF</span>
+                </div>
+
+                <div className="flex justify-between items-center text-emerald-400">
+                  <span>Discount Savings Amount</span>
+                  <span className="font-mono font-bold">-₹{appliedCoupon.discountAmount.toLocaleString()}</span>
+                </div>
+              </>
+            )}
+
+            <div className="flex justify-between items-center pt-4 border-t border-white/10 text-base md:text-lg">
+              <span className="font-bold text-white uppercase">Net Payable Amount</span>
+              <span className="font-display font-black text-2xl md:text-3xl text-white">
+                ₹{finalPayableAmount.toLocaleString()}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Error message display if any submission error occurs */}
         {submitError && (
           <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-2xl flex items-center gap-3 text-red-400 text-xs font-bold uppercase">
             <AlertCircle size={18} className="shrink-0" />
@@ -252,22 +342,22 @@ export default function PaymentSection({
           </div>
         )}
 
-        {/* Section 6: Final Submission Button */}
+        {/* Final Submission Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10">
           <button
             type="button"
             onClick={onPrev}
-            className="w-full sm:w-auto px-6 py-3 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest text-[#A1A1AA] hover:text-white hover:border-white/30 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-white/10 text-xs font-bold uppercase tracking-widest text-[#A1A1AA] hover:text-white hover:border-white/30 transition-all flex items-center justify-center gap-2"
           >
             <ArrowLeft size={16} /> Back to Summary
           </button>
 
           <button
             type="button"
-            onClick={onSubmitBooking}
-            disabled={submitting || !paymentScreenshot}
-            className={`w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-10 py-5 uppercase text-xs tracking-[0.25em] font-black shadow-[0_0_30px_rgba(91,73,173,0.6)] flex items-center justify-center gap-3 ${
-              submitting || !paymentScreenshot ? 'opacity-40 cursor-not-allowed' : ''
+            onClick={handleSubmitWithCoupon}
+            disabled={submitting}
+            className={`w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-6 sm:px-10 py-3.5 sm:py-5 uppercase text-xs tracking-[0.15em] sm:tracking-[0.25em] font-black shadow-[0_0_30px_rgba(91,73,173,0.6)] flex items-center justify-center gap-3 ${
+              submitting ? 'opacity-40 cursor-not-allowed' : ''
             }`}
           >
             {submitting ? (
@@ -277,7 +367,7 @@ export default function PaymentSection({
               </>
             ) : (
               <>
-                Submit Scheduled Booking
+                Confirm & Submit Booking
                 <CheckCircle2 size={18} />
               </>
             )}

@@ -15,7 +15,7 @@ export default function BookingSummaryCard({ bookingData, onEdit, onProceedToPay
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in max-w-5xl mx-auto">
       <div className="text-center max-w-xl mx-auto space-y-3">
         <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#5B49AD] flex items-center justify-center gap-2">
           <ShieldCheck size={14} /> Step 6 of 7 — Booking Review
@@ -24,7 +24,7 @@ export default function BookingSummaryCard({ bookingData, onEdit, onProceedToPay
           Review Booking Details
         </h2>
         <p className="text-sm text-[#A1A1AA]">
-          Please review your scheduled campaign parameters before completing payment.
+          Please review your scheduled campaign parameters before proceeding to coupon application & payment.
         </p>
       </div>
 
@@ -165,9 +165,9 @@ export default function BookingSummaryCard({ bookingData, onEdit, onProceedToPay
             <button
               type="button"
               onClick={onProceedToPayment}
-              className="w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-8 py-4 uppercase text-xs tracking-[0.2em] font-bold shadow-[0_0_25px_rgba(91,73,173,0.5)] flex items-center justify-center gap-2"
+              className="w-full sm:w-auto tech-button !bg-[#5B49AD] !text-white px-5 sm:px-8 py-3.5 sm:py-4 uppercase text-xs tracking-[0.15em] sm:tracking-[0.2em] font-bold shadow-[0_0_25px_rgba(91,73,173,0.5)] flex items-center justify-center gap-2 cursor-pointer"
             >
-              Continue to Payment <ArrowRight size={16} />
+              Continue to Payment & Coupons <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -175,3 +175,4 @@ export default function BookingSummaryCard({ bookingData, onEdit, onProceedToPay
     </div>
   );
 }
+

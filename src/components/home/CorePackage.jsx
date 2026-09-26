@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { IndianRupee, Clock, Zap } from 'lucide-react';
+import { IndianRupee, Clock } from 'lucide-react';
 
 const CorePackage = () => {
   return (
@@ -36,7 +36,7 @@ const CorePackage = () => {
                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none"
              />
 
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-2xl mx-auto relative z-10">
                 <div className="flex flex-col items-center text-center gap-4">
                     <div className="w-16 h-16 rounded-2xl bg-[#5B49AD]/10 flex items-center justify-center text-[#5B49AD] group-hover:bg-[#5B49AD] group-hover:text-white transition-all transform group-hover:scale-110">
                         <IndianRupee size={32} />
@@ -47,25 +47,14 @@ const CorePackage = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center text-center gap-4 border-y md:border-y-0 md:border-x border-primary/5 py-8 md:py-0">
-                    <div className="w-16 h-16 rounded-2xl bg-[#5B49AD]/5 flex items-center justify-center text-[#5B49AD]/40 group-hover:bg-[#5B49AD] group-hover:text-white transition-all">
+                <div className="flex flex-col items-center text-center gap-4 border-t md:border-t-0 md:border-l border-white/10 pt-8 md:pt-0 md:pl-12">
+                    <div className="w-16 h-16 rounded-2xl bg-[#5B49AD]/10 flex items-center justify-center text-[#5B49AD] group-hover:bg-[#5B49AD] group-hover:text-white transition-all transform group-hover:scale-110">
                         <Clock size={32} />
                     </div>
                     <div>
                         <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[8px] md:text-[10px] mb-1 font-bold">Minimum Booking</p>
                         <h3 className="text-2xl md:text-4xl font-display font-black text-[#5B49AD]">4 Hours</h3>
-                        <p className="text-primary text-[10px] md:text-xs font-bold mt-1 uppercase tracking-widest">₹4,000 Total</p>
-                    </div>
-                </div>
-
-                <div className="flex flex-col items-center text-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-[#5B49AD]/5 flex items-center justify-center text-[#5B49AD]/40 group-hover:bg-[#5B49AD] group-hover:text-white transition-all">
-                        <Zap size={32} />
-                    </div>
-                    <div>
-                        <p className="text-[#A1A1AA]/60 uppercase tracking-widest text-[8px] md:text-[10px] mb-1 font-bold">Maximum Per Day</p>
-                        <h3 className="text-2xl md:text-4xl font-display font-black text-[#5B49AD]">5 Hours</h3>
-                        <p className="text-primary text-[10px] md:text-xs font-bold mt-1 uppercase tracking-widest">₹5,000 Total</p>
+                        <p className="text-[#5B49AD] text-[10px] md:text-xs font-bold mt-1 uppercase tracking-widest">₹4,000 Total</p>
                     </div>
                 </div>
              </div>

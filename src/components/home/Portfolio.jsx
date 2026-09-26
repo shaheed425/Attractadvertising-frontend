@@ -5,17 +5,40 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ExternalLink, Eye } from 'lucide-react';
 
+export const DEFAULT_PROJECTS = [
+  {
+    _id: 'p-1',
+    title: 'Kochi Metro Launch Campaign',
+    client: 'Kochi Metro Rail',
+    imageUrl: 'https://images.unsplash.com/photo-1542744094-3a3172720177?w=800&auto=format&fit=crop&q=80',
+  },
+  {
+    _id: 'p-2',
+    title: 'Grand Retail Activation',
+    client: 'LuLu Hypermarket',
+    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80',
+  },
+  {
+    _id: 'p-3',
+    title: 'Luxury Jewel Launch',
+    client: 'Malabar Gold & Diamonds',
+    imageUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=80',
+  },
+];
+
 export default function Portfolio() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(DEFAULT_PROJECTS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const { data } = await axios.get(`${API_URL}/api/portfolios`);
-        setProjects(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setProjects(data);
+        }
       } catch (error) {
-        console.error('Error fetching portfolio:', error);
+        console.warn('Portfolio API fetch fallback:', error?.message);
       } finally {
         setLoading(false);
       }

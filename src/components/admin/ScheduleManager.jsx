@@ -416,9 +416,14 @@ export default function ScheduleManager() {
                       <div className="flex items-center justify-between md:flex-col md:items-end gap-2">
                         <div className="text-left md:text-right">
                           <span className="text-3xl font-display font-black text-white">
-                            ₹{(booking.totalAmount || 4999).toLocaleString()}
+                            ₹{(booking.totalAmount || booking.finalAmount || 4000).toLocaleString()}
                           </span>
-                          <p className="text-[10px] text-white/40 uppercase tracking-widest">Campaign Fee</p>
+                          {booking.couponCode && (
+                            <span className="block text-[10px] font-bold font-mono text-emerald-400">
+                              PROMO: {booking.couponCode} (-₹{(booking.discountAmount || 0).toLocaleString()})
+                            </span>
+                          )}
+                          <p className="text-[10px] text-white/40 uppercase tracking-widest">Final Payable Fee</p>
                         </div>
 
                         <button
@@ -538,7 +543,23 @@ export default function ScheduleManager() {
                                 <strong className="text-white/40">Screen Count:</strong> {booking.screenCount || 1} {booking.screenCount === 1 ? 'Screen' : 'Screens'}
                               </p>
                               <p>
-                                <strong className="text-white/40">Booking Fee:</strong> ₹{(booking.totalAmount || 4999).toLocaleString()}
+                                <strong className="text-white/40">Original Fee:</strong> ₹{(booking.originalAmount || booking.totalAmount || 4000).toLocaleString()}
+                              </p>
+                              {booking.couponCode && (
+                                <>
+                                  <p>
+                                    <strong className="text-white/40">Applied Coupon:</strong>{' '}
+                                    <span className="font-mono text-emerald-400 font-bold">{booking.couponCode}</span> ({booking.discountPercentage}% OFF)
+                                  </p>
+                                  <p>
+                                    <strong className="text-white/40">Discount Savings:</strong>{' '}
+                                    <span className="text-emerald-400 font-bold">-₹{(booking.discountAmount || 0).toLocaleString()}</span>
+                                  </p>
+                                </>
+                              )}
+                              <p>
+                                <strong className="text-white/40">Final Payable Fee:</strong>{' '}
+                                <span className="text-white font-bold">₹{(booking.totalAmount || booking.finalAmount || 4000).toLocaleString()}</span>
                               </p>
                             </div>
                           </div>

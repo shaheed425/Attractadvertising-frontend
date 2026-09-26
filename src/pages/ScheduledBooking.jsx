@@ -68,7 +68,7 @@ export default function ScheduledBooking({ toggleContactModal }) {
     ...customerData,
   };
 
-  const handleFinalSubmit = async () => {
+  const handleFinalSubmit = async (couponData = {}) => {
     setSubmitError('');
 
     // Validation checks
@@ -79,21 +79,24 @@ export default function ScheduledBooking({ toggleContactModal }) {
     if (!customerData.customerName || !customerData.phoneNumber || !customerData.email) {
       return setSubmitError('Please fill in required customer details (Name, Phone, Email).');
     }
-    if (!paymentScreenshot) {
-      return setSubmitError('Please upload a clear screenshot of your UPI payment before submitting.');
-    }
 
     setSubmitting(true);
 
     const bookingPayload = {
       bookingId: `ATT-SCH-${Math.floor(100000 + Math.random() * 900000)}`,
       ...bookingData,
-      paymentScreenshot,
-      paymentStatus: 'Pending Verification',
+      originalAmount: couponData.originalAmount || totalAmount,
+      couponCode: couponData.couponCode || '',
+      discountPercentage: couponData.discountPercentage || 0,
+      discountAmount: couponData.discountAmount || 0,
+      totalAmount: couponData.finalAmount || totalAmount,
+      finalAmount: couponData.finalAmount || totalAmount,
+      paymentScreenshot: paymentScreenshot || '',
+      paymentStatus: 'Pending Confirmation',
       createdAt: new Date().toISOString(),
     };
 
-    // Save to local storage for instant sync across admin panel
+    // Save to local storage for instant sync across admin panel dashboard
     try {
       const existingStr = localStorage.getItem('attract_scheduled_bookings');
       const existing = existingStr ? JSON.parse(existingStr) : [];
@@ -113,18 +116,16 @@ export default function ScheduledBooking({ toggleContactModal }) {
 
       if (response.ok) {
         const result = await response.json();
-        setBookingResult(result);
-        setStep(8); // Success state
+        setBookingResult(result || bookingPayload);
       } else {
         setBookingResult(bookingPayload);
-        setStep(8);
       }
     } catch (err) {
       console.warn('Backend API connection issue, completing with offline demo state:', err);
       setBookingResult(bookingPayload);
-      setStep(8);
     } finally {
       setSubmitting(false);
+      setStep(8); // Show Success View
     }
   };
 
@@ -141,7 +142,7 @@ export default function ScheduledBooking({ toggleContactModal }) {
       <div className="pt-32 pb-24 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto relative z-10">
         
         {/* Step Progress Bar (Hidden on Success) */}
-        {step < 8 && <StepProgress currentStep={step} setStep={setStep} />}
+        {step <= 7 && <StepProgress currentStep={step} setStep={setStep} />}
 
         {/* Step Views */}
         {step === 1 && (
@@ -222,3 +223,4 @@ export default function ScheduledBooking({ toggleContactModal }) {
     </div>
   );
 }
+
