@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, MapPin, Navigation, Clock, User, Building, Edit3, ArrowRight, ShieldCheck, Tag, Tv } from 'lucide-react';
 
 export default function BookingSummaryCard({ bookingData, onEdit, onProceedToPayment }) {
-  const { date, preferredDate, district, place, timeSlot, screenCount = 1, basePricePerScreen = 4000, customerName, companyName, email, phoneNumber, totalAmount } = bookingData;
+  const { date, preferredDate, district, place, timeSlot, screenCount = 2, basePricePerScreen = 4000, customerName, companyName, email, phoneNumber, totalAmount } = bookingData;
 
   const formatDateStr = (d) => {
     if (!d) return 'N/A';

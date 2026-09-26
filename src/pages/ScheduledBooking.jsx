@@ -21,7 +21,7 @@ export default function ScheduledBooking({ toggleContactModal }) {
   const [district, setDistrict] = useState('');
   const [place, setPlace] = useState('');
   const [timeSlot, setTimeSlot] = useState('');
-  const [screenCount, setScreenCount] = useState(1);
+  const [screenCount, setScreenCount] = useState(2);
   const [customerData, setCustomerData] = useState({
     customerName: '',
     phoneNumber: '',
@@ -54,7 +54,7 @@ export default function ScheduledBooking({ toggleContactModal }) {
   }, []);
 
   const basePricePerScreen = timeSlot.includes('Full-Day') ? 9999 : 4000;
-  const totalAmount = basePricePerScreen * (screenCount || 1);
+  const totalAmount = basePricePerScreen * (screenCount || 2);
 
   const bookingData = {
     date,
@@ -62,7 +62,7 @@ export default function ScheduledBooking({ toggleContactModal }) {
     district,
     place,
     timeSlot,
-    screenCount: screenCount || 1,
+    screenCount: screenCount || 2,
     basePricePerScreen,
     totalAmount,
     ...customerData,

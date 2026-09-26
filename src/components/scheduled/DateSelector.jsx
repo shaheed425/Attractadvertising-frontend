@@ -6,7 +6,7 @@ export default function DateSelector({
   setDate,
   preferredDate,
   setPreferredDate,
-  screenCount = 1,
+  screenCount = 2,
   setScreenCount,
   onNext,
 }) {
@@ -99,7 +99,7 @@ export default function DateSelector({
               <Tv className="text-[#5B49AD]" /> How Many Screens Do You Need?
             </h3>
             <p className="text-xs text-[#A1A1AA] mt-0.5">
-              Select the number of walking billboard LED screens (Default = 1 Screen). Price updates automatically.
+              Select the number of walking billboard LED screens (Minimum = 2 Screens). Price updates automatically.
             </p>
           </div>
 
@@ -108,16 +108,16 @@ export default function DateSelector({
             <div className="flex items-center gap-2 bg-black/60 border border-white/10 p-2 rounded-2xl self-start sm:self-auto">
               <button
                 type="button"
-                onClick={() => setScreenCount(Math.max(1, screenCount - 1))}
+                onClick={() => setScreenCount(Math.max(2, screenCount - 1))}
                 className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-[#5B49AD] transition-all flex items-center justify-center disabled:opacity-30"
-                disabled={screenCount <= 1}
+                disabled={screenCount <= 2}
               >
                 <Minus size={16} />
               </button>
               <div className="px-4 text-center">
                 <span className="text-xl font-black text-white font-mono">{screenCount}</span>
                 <span className="block text-[9px] text-[#A1A1AA] uppercase font-bold">
-                  {screenCount === 1 ? 'Screen' : 'Screens'}
+                  Screens
                 </span>
               </div>
               <button
@@ -131,10 +131,10 @@ export default function DateSelector({
           )}
         </div>
 
-        {/* Quick Screen Count Selectors (1, 2, 3, 4 Screens) */}
+        {/* Quick Screen Count Selectors (2, 3, 4, 5 Screens) */}
         {setScreenCount && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((count) => {
+            {[2, 3, 4, 5].map((count) => {
               const isSelected = screenCount === count;
               const screenTotal = 4000 * count;
               return (
@@ -150,14 +150,14 @@ export default function DateSelector({
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-black uppercase text-white tracking-wider">
-                      {count} {count === 1 ? 'Screen' : 'Screens'}
+                      {count} Screens
                     </span>
                     {isSelected && <CheckCircle2 size={16} className="text-[#5B49AD]" />}
                   </div>
                   <div className="mt-3">
                     <span className="text-lg font-black text-white font-mono">₹{screenTotal.toLocaleString()}</span>
                     <p className="text-[10px] text-[#A1A1AA] uppercase font-bold mt-0.5">
-                      {count === 1 ? 'Standard Coverage' : `${count}x Multiplier`}
+                      {count === 2 ? 'Minimum Coverage' : `${count}x Multiplier`}
                     </p>
                   </div>
                 </button>
