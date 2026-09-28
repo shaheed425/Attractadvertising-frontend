@@ -43,7 +43,7 @@ export default function PaymentSection({
   const [validatingCoupon, setValidatingCoupon] = useState(false);
 
   const storedSettings = getStoredSettings();
-  const upiId = ownerUpiSettings?.upiId || storedSettings?.upiId || '8590204464@ybl';
+  const upiId = ownerUpiSettings?.upiId || storedSettings?.upiId || '7034204464@ybl';
   const ownerName = ownerUpiSettings?.ownerName || storedSettings?.ownerName || 'ATTRACT ADVERTISING';
   const customQrImage = ownerUpiSettings?.qrImage || storedSettings?.qrImage;
 

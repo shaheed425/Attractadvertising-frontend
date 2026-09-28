@@ -21,7 +21,7 @@ export default function Footer() {
               "STOP WAITING FOR CUSTOMERS TO FIND YOU. WALK YOUR BRAND STRAIGHT TO THEM."
             </p>
             <a
-              href="https://www.instagram.com/Stackxxio_/"
+              href="https://www.instagram.com/zynexta_/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 mb-10 group cursor-pointer"
@@ -30,14 +30,13 @@ export default function Footer() {
                 <Instagram size={18} className="text-white opacity-40 group-hover:opacity-100 transition-opacity" />
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 group-hover:text-white/40 transition-colors tracking-[0.4em]">Developed By</p>
-                <p className="text-sm font-bold tracking-widest text-white group-hover:text-primary transition-colors">@Stackxxio_</p>
+                <p className="text-[10px] font-bold uppercase text-white/40 group-hover:text-white/60 transition-colors tracking-[0.4em]">Developed By</p>
+                <p className="text-sm font-bold tracking-widest text-white group-hover:text-[#5B49AD] transition-colors lowercase">zynexta_</p>
               </div>
             </a>
             <div className="flex gap-4">
               {[
-                // { icon: <Facebook size={20} />, label: 'Facebook', href: '', isSpecial: true },
-                { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://www.instagram.com/Stackxxio_/' },
+                { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://www.instagram.com/zynexta_/' },
                 { icon: <Twitter size={20} />, label: 'Twitter', href: '#' },
                 { icon: <Linkedin size={20} />, label: 'LinkedIn', href: '#' },
               ].map((social, i) => (
@@ -93,7 +92,7 @@ export default function Footer() {
                 <div className="text-sm text-white/40 leading-relaxed font-medium">
                   <p className="text-white font-bold uppercase tracking-widest mb-2">Connect</p>
                   <div className="flex flex-col gap-1">
-                    <a href="tel:+918590204464" className="hover:text-white transition-colors">+91 85902 04464</a>
+                    <a href="tel:+917034204464" className="hover:text-white transition-colors">+91 70342 04464</a>
                     <a href="tel:+916282546530" className="hover:text-white transition-colors">+91 62825 46530</a>
                   </div>
                 </div>

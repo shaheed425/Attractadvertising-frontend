@@ -31,7 +31,7 @@ export default function Contact({ toggleContactModal }) {
             <div className="flex flex-col items-center gap-8">
               <p className="text-lg md:text-2xl text-[#A1A1AA]/40 max-w-2xl mx-auto leading-relaxed font-medium">
                 Contact us to book your slot! <br />
-                <span className="text-[#A1A1AA] font-black text-2xl md:text-5xl border-b-2 md:border-b-4 border-[#A1A1AA] pb-2 mt-4 inline-block tracking-tighter">+91 85902 04464</span>
+                <span className="text-[#A1A1AA] font-black text-2xl md:text-5xl border-b-2 md:border-b-4 border-[#A1A1AA] pb-2 mt-4 inline-block tracking-tighter">+91 70342 04464</span>
               </p>
 
               <motion.button

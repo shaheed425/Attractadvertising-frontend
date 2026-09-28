@@ -98,3 +98,34 @@
 .animate-marquee {
   animation: marquee 35s linear infinite;
 }
+
+/* Print Styles for Quotation Paper */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  nav, footer, .no-print, header, .fixed, button, input {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .printable-quotation-paper {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 30px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

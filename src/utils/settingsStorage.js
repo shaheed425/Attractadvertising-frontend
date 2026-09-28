@@ -1,8 +1,8 @@
 export const DEFAULT_SETTINGS = {
-  upiId: '8590204464@ybl',
+  upiId: '7034204464@ybl',
   ownerName: 'ATTRACT ADVERTISING',
   qrImage: '',
-  instagramUrl: 'https://www.instagram.com/Stackxxio_/',
+  instagramUrl: 'https://www.instagram.com/zynexta_/',
   heroShowcaseImage: '',
   timeSlots: [
     {
