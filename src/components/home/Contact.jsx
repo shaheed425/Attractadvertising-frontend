@@ -11,7 +11,7 @@ const socials = [
 
 export default function Contact({ toggleContactModal }) {
   return (
-    <section className="py-40 bg-black px-6 relative overflow-hidden" id="contact">
+    <section className="pt-24 pb-12 bg-black px-6 relative overflow-hidden" id="contact">
       <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none" />
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 blur-[160px] rounded-full pointer-events-none" />

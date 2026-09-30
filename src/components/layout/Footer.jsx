@@ -3,11 +3,11 @@ import { Mail, Phone, MapPin, Instagram, Youtube, Facebook, Linkedin, Twitter } 
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/10 pt-32 pb-16 px-6 relative overflow-hidden">
+    <footer className="bg-black border-t border-white/10 pt-16 pb-12 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-24 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-24 mb-12">
           {/* Brand & Tagline */}
           <div className="flex flex-col items-start">
             <motion.div
@@ -15,7 +15,7 @@ export default function Footer() {
               whileInView={{ opacity: 1 }}
               className="text-2xl md:text-3xl font-display font-black text-white mb-8 tracking-tighter uppercase"
             >
-              ATTRACT<span className="text-white opacity-40">.</span>
+              ATTRACT
             </motion.div>
             <p className="text-sm md:text-lg text-white/40 leading-relaxed mb-6 max-w-xs font-medium italic">
               "STOP WAITING FOR CUSTOMERS TO FIND YOU. WALK YOUR BRAND STRAIGHT TO THEM."
